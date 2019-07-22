@@ -1,9 +1,9 @@
 package com.hotelcalifornia.hotel.controllers;
 
+
 import com.hotelcalifornia.hotel.models.Booking;
 import com.hotelcalifornia.hotel.models.Guest;
 import com.hotelcalifornia.hotel.models.User;
-
 import com.hotelcalifornia.hotel.repository.BookingRepository;
 
 import java.text.SimpleDateFormat;
@@ -117,7 +117,7 @@ public class BookingController {
         String userName = scanner.nextLine();
         System.out.println("Enter password: ");
         String enteredPassword = scanner.nextLine();
-        User user = new User(userName, enteredPassword);
+        User user = new User();
         return user;
     }
     private void setUserDetails(Booking booking, User user){

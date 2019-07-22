@@ -1,6 +1,5 @@
-package com.hotelcalifornia.hotel.models.Employees;
+package com.hotelcalifornia.hotel.models;
 
-import com.hotelcalifornia.hotel.models.User;
 
 public class Employee extends User {
 
@@ -8,7 +7,9 @@ public class Employee extends User {
     private String employeeId;
 
     public Employee(User user, String employeeId) {
-        this.user = user;
+        this.setUserName(user.getUserName());
+        this.setPassword(user.getPassword());
+        this.setType("employee");
         this.employeeId = employeeId;
     }
 

@@ -2,7 +2,7 @@ package com.hotelcalifornia.hotel.models;
 
 
 
-public class Receptionist extends com.hotelcalifornia.hotel.models.Employees.Employee {
+public class Receptionist extends Employee {
 
     private Room[] availableRooms;
 
