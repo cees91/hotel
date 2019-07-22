@@ -1,9 +1,10 @@
 package com.hotelcalifornia.hotel.models;
 
-import java.util.Date;
-import java.util.UUID;
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
+
+import java.util.Date;
+import java.util.UUID;
 
 public class Booking {
 

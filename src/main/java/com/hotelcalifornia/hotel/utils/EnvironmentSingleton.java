@@ -1,7 +1,7 @@
 package com.hotelcalifornia.hotel.utils;
 
+
 import com.hotelcalifornia.hotel.Interfaces.BookingSaver;
-import com.hotelcalifornia.hotel.models.Booking;
 
 public class EnvironmentSingleton {
 

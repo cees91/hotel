@@ -1,8 +1,7 @@
 package com.hotelcalifornia.hotel.repository;
 
+
 import com.hotelcalifornia.hotel.models.Booking;
-import com.hotelcalifornia.hotel.models.Guest;
-import com.hotelcalifornia.hotel.utils.CSVReader;
 import com.hotelcalifornia.hotel.utils.EnvironmentSingleton;
 
 import java.util.ArrayList;
