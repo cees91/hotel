@@ -112,10 +112,10 @@ public class BookingRepository {
         return null;
     }
 
-    private void findAndUpdate(String lastName, long id, Booking booking) {
+    public void findAndUpdate(long id, Booking booking) {
         for (Booking currentBooking : this.BookingList) {
-            if (currentBooking.getHeadBooker().lastName.equals(lastName) || currentBooking.getBookingId() == id) {
-                currentBooking = booking;
+            if (currentBooking.getBookingId() == id) {
+                this.BookingList.set(this.BookingList.indexOf(currentBooking),booking);
             }
         }
     }
@@ -130,9 +130,8 @@ public class BookingRepository {
     }
 
     public void update(Booking booking) {
-        String name = booking.getHeadBooker().lastName;
         long id = booking.getBookingId();
-        findAndUpdate(name, id, booking);
+        findAndUpdate(id, booking);
     }
 
     public void deleteBooking(long id) {
