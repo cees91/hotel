@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 @RestController()
 @RequestMapping("api/rooms")
 public class RoomController {
@@ -26,72 +28,69 @@ public class RoomController {
     }
 
     @GetMapping(params = "roomID")
-    public Room getRoomByID(@RequestParam("roomID") int id){
+    public Room getRoomByID(@RequestParam("roomID") int id) {
         Room room = null;
         try {
             room = RoomRepository.getInstance().findRoom(id);
-        } catch(Exception error){
+        } catch (Exception error) {
             System.out.println(error);
         }
         return room;
     }
+
     @GetMapping()
-    public ArrayList<Room> getAllRooms(){
+    public ArrayList<Room> getAllRooms() {
         ArrayList<Room> rooms = null;
         try {
             rooms = RoomRepository.getInstance().getRooms();
-        } catch(Exception error){
+        } catch (Exception error) {
             System.out.println(error);
         }
         return rooms;
+    }
+
+    @GetMapping("/available")
+    public List<Room> getAvailableRooms() {
+        List<Room> rooms = null;
+        try {
+            rooms = RoomRepository.getInstance().getAvailableRooms();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
+        return rooms;
+    }
+
+    @GetMapping(params = "roomType")
+    public List<Room> findRooms(@RequestParam("roomType") String roomType) {
+        List<Room> rooms = null;
+        try {
+            rooms = RoomRepository.getInstance().findRoom(roomType);
+        } catch (Exception error) {
+            System.out.println(error);
+        }
+        return rooms;
+    }
+    @GetMapping(params = "numberOfPeople")
+    public List<Room> findRooms(@RequestParam("numberOfPeople") int numberOfPeople){
+        List<Room> rooms = null;
+        try {
+            rooms = RoomRepository.getInstance().filterRoomsByPeople(numberOfPeople);
+        } catch (Exception error) {
+            System.out.println(error);
+        }
+        return rooms;
+    }
+    @GetMapping(params = {"numberOfPeople", "dateRange"})
+    public List<Room> findRooms(@RequestParam("numberOfPeople") int numberOfPeople, @RequestParam("dateRange") String dates){
+        return RoomRepository.getInstance().findAvailableRooms(numberOfPeople,dates);
     }
     private ArrayList<Room> readCSVFile() {
         CSVReader reader = new CSVReader();
         ArrayList<Room> csvRooms = reader.csvReader();
 
-            return csvRooms;
-        }
-
-        ;
-        public Booking bookRooms (Booking newBooking){
-            ERoomType roomType = showRoomTypes(newBooking);
-            boolean isAvailable = checkRoomAvailability(roomType, newBooking);
-            if (isAvailable) {
-                return newBooking;
-            }
-            return null;
-        }
-        private ERoomType showRoomTypes (Booking newBooking){
-            String types = "";
-            int i = 1;
-            for (ERoomType currentType : ERoomType.values()) {
-                types += i + ": " + currentType.name() + "\n";
-                i++;
-            }
-            Scanner terminal = new Scanner(System.in);
-            System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            System.out.println(types);
-            ERoomType roomType = ERoomType.values()[Integer.parseInt(terminal.nextLine())];
-            return roomType;
-        }
-
-        private boolean checkRoomAvailability (ERoomType type, Booking currentBooking){
-            int i = 1;
-            Room[] rooms = new Room[100];
-            int numberOfGuests = currentBooking.getNumberOfGuests();
-            for (Room currentRoom : this.rooms) {
-                if (currentRoom.isAvailable() && currentRoom.getType() == type && numberOfGuests > 0) {
-                    numberOfGuests -= currentRoom.getAdults();
-                    rooms[i] = currentRoom;
-                    i++;
-                }
-            }
-            currentBooking.setBookedRooms(rooms);
-            if (numberOfGuests == 0) {
-                return true;
-            }
-            return false;
-        }
-
-
+        return csvRooms;
     }
+
+
+
+}
