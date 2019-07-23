@@ -4,17 +4,22 @@ import com.hotelcalifornia.hotel.models.Employee;
 import com.hotelcalifornia.hotel.models.Guest;
 import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.repository.UserRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+@RestController
+@RequestMapping("users")
 public class UserController {
+
 
     ArrayList<User> users = new ArrayList<>();
     ArrayList<Guest> guests = GuestController.guests;
 
-    ArrayList<Employee> employees = new ArrayList<>();
+    ArrayList<Employee> employees = EmployeeController.employees;
 
 
     public ArrayList<User> fillUserlist(ArrayList<Guest> guests, ArrayList<Employee> employees) {
@@ -23,11 +28,13 @@ public class UserController {
         return users;
     }
 
-    public int findUser(int userId) throws Exception {
+
+    public int findUser(@RequestParam int userId) throws Exception {
         return UserRepository.getInstance().findUserIndexById(userId);
     }
 
-    public String deleteUser(int userId) {
+
+    public String deleteUser(@RequestParam int userId) {
         try {
             UserRepository.getInstance().remove(userId);
         } catch (Exception ex) {
@@ -36,16 +43,6 @@ public class UserController {
         return "User succesfully deleted! (id = " + userId + ")";
 
     }
-
-//    public String updateUserName(User user) {
-//        try {
-//            UserRepository.getInstance().updateUser(user);
-//        } catch (Exception ex) {
-//            return "Error updating the username: " + ex.toString();
-//        }
-//        return "Username succesfully updated!";
-//
-//    }
 
     public void resetPassword(int userId) {
         try {

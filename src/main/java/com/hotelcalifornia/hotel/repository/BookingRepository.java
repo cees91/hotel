@@ -85,6 +85,7 @@ public class BookingRepository {
     public void create(Booking booking) {
         this.bookedRooms.add(booking);
     }
+
     public void update(Booking booking){
         String name = booking.getHeadBooker().lastName;
         String id = booking.getBookingId();

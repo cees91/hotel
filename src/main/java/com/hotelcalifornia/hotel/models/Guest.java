@@ -1,8 +1,9 @@
 package com.hotelcalifornia.hotel.models;
 
+import java.util.UUID;
+
 public class Guest extends User {
 
-    private String customerId;
     public String firstName;
     public String lastName;
     private String phoneNumber;

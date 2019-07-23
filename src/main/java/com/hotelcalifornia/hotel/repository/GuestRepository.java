@@ -2,16 +2,19 @@ package com.hotelcalifornia.hotel.repository;
 
 import com.hotelcalifornia.hotel.Interfaces.Repository;
 import com.hotelcalifornia.hotel.models.Guest;
+import com.hotelcalifornia.hotel.models.User;
+import com.hotelcalifornia.hotel.utils.EnvironmentSingleton;
 
 import java.util.ArrayList;
 
-public class GuestRepository implements Repository<Guest> {
+public class GuestRepository implements Repository <Guest> {
 
     private static GuestRepository instance = null;
     private ArrayList<Guest> guests = new ArrayList<>();
+    EnvironmentSingleton singleton = EnvironmentSingleton.getInstance();
 
     private GuestRepository() {
-        //Read the CSV and bind data to bookedRooms
+        //Read the CSV and bind data to guests
 
     }
 
@@ -34,17 +37,18 @@ public class GuestRepository implements Repository<Guest> {
         guest.setPostcode(guest.getPostcode());
         guest.setUserName(guest.getUserName());
         guest.setPassword(guest.getPassword());
+        guest.getUserId();
         guests.add(guest);
     }
 
     @Override
-    public void update(int userId) throws Exception {
-        guests.get(UserRepository.getInstance().findUserIndexById(userId));
-
+    public void update(Guest guest) {
+        String id = guest.getUserId();
+        UserRepository.findAndUpdate(id, guest);
     }
 
     @Override
-    public void remove(int userId) throws Exception {
-        guests.remove(UserRepository.getInstance().findUserIndexById(userId));
+    public void remove(String userId) {
+        guests.remove(UserRepository.findUser(userId));
     }
 }

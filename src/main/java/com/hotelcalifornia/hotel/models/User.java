@@ -1,26 +1,29 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.hotelcalifornia.hotel.Enums.EUserType;
+
+import java.util.UUID;
+
 public class User {
 
-    private int userId = 1;
+    private String userId;
     private String userName;
     private String password;
     private static int count = 1;
 
-    // FIXME: should be an enum. -Joris
-    private String type;
+    private EUserType type;
 
     public User() {
     }
 
-    public User(String userName, String password, String type) {
+    public User(String userName, String password, EUserType type) {
         this.userName = userName;
         this.password = password;
-        this.userId = count++;
+        this.userId = UUID.randomUUID().toString();;
         this.type = type;
     }
 
-    public User(int userId) {
+    public User(String userId) {
         this.userId = userId;
     }
 
@@ -40,15 +43,15 @@ public class User {
         this.password = password;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public String getType() {
+    public EUserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EUserType type) {
         this.type = type;
     }
 }
