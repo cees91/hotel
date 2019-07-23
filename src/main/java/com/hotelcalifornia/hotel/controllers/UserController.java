@@ -4,15 +4,13 @@ import com.hotelcalifornia.hotel.models.Employee;
 import com.hotelcalifornia.hotel.models.Guest;
 import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.repository.UserRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("users")
+
+/**
+ * This is the User controller.
+ * It can be used to find users, show a list of users and delete or create users.
+ */
 public class UserController {
 
 
@@ -29,38 +27,17 @@ public class UserController {
     }
 
 
-    public int findUser(@RequestParam int userId) throws Exception {
-        return UserRepository.getInstance().findUserIndexById(userId);
+    public User findUser(String userId) {
+        return UserRepository.findUser(userId);
     }
 
 
-    public String deleteUser(@RequestParam int userId) {
-        try {
+    public void deleteUser(String userId) {
             UserRepository.getInstance().remove(userId);
-        } catch (Exception ex) {
-            return "Error deleting the user: " + ex.toString();
-        }
-        return "User succesfully deleted! (id = " + userId + ")";
-
     }
 
-    public void resetPassword(int userId) {
-        try {
+    public void resetPassword(String userId) {
             UserRepository.getInstance().resetPassword(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    public String generateRandomPassword() {
-        final int LENGTH = 8;
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "abcdefghijklmnopqrstuvwxyz"
-                + "0123456789";
-        String password = new Random().ints(LENGTH, 0, chars.length())
-                .mapToObj(i -> "" + chars.charAt(i))
-                .collect(Collectors.joining());
-
-        return password;
-    }
 }

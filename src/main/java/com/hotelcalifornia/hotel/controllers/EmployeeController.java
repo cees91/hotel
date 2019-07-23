@@ -13,8 +13,7 @@ public class EmployeeController extends UserController {
 
     public static ArrayList<Employee> employees;
 
-    @PostMapping
-    public void createEmployee(@RequestBody Employee employee){
+    public void createEmployee(Employee employee){
         EmployeeRepository.getInstance().create(employee);
     }
 
