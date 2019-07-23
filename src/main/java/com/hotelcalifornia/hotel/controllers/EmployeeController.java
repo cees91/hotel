@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class EmployeeController extends UserController {
 
-    public static ArrayList<Employee> employees;
 
     public void createEmployee(Employee employee){
         EmployeeRepository.getInstance().create(employee);

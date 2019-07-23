@@ -15,10 +15,6 @@ public class UserController {
 
 
     ArrayList<User> users = new ArrayList<>();
-    ArrayList<Guest> guests = GuestController.guests;
-
-    ArrayList<Employee> employees = EmployeeController.employees;
-
 
     public ArrayList<User> fillUserlist(ArrayList<Guest> guests, ArrayList<Employee> employees) {
         users.addAll(guests);

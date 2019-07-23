@@ -6,6 +6,7 @@ import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.utils.EnvironmentSingleton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GuestRepository implements Repository <Guest> {
 
@@ -52,5 +53,9 @@ public class GuestRepository implements Repository <Guest> {
     @Override
     public void remove(String userId) {
         guests.remove(UserRepository.findUser(userId));
+    }
+
+    public List<Guest> getAllGuests() {
+        return guests;
     }
 }
