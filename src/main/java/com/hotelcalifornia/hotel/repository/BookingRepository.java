@@ -112,9 +112,17 @@ public class BookingRepository {
         return null;
     }
 
+    /**
+     * finds a booking by id and update it with the given booking
+     * @param id the booking id of the booking to update
+     * @param booking a new booking object to replace the old one
+     */
     public void findAndUpdate(long id, Booking booking) {
         for (Booking currentBooking : this.BookingList) {
             if (currentBooking.getBookingId() == id) {
+                // set the id of the newly created booking to the id of the old booking
+                booking.setBookingId(id);
+                // and overwrite old booking with new booking
                 this.BookingList.set(this.BookingList.indexOf(currentBooking),booking);
             }
         }

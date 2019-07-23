@@ -18,10 +18,10 @@ public class BookingController {
      * searches for a booking in the registered list by booking id
      * @param id the id of the booking
      * @return the {@link Booking} or null, returns a booking when successful, null when not
-     * TODO don't return null, throw an exception
+     * TODO: don't return null, throw an exception
      */
-    @GetMapping("bookingId={id}")
-    public Booking getBookingFromRepository(@PathVariable long id) {
+    @GetMapping(params = "bookingId")
+    public Booking getBookingFromRepository(@RequestParam("bookingId") long id) {
         System.out.println("get by id");
         return BookingRepository.getInstance().findBooking(id);
     }
@@ -31,8 +31,8 @@ public class BookingController {
      * @param userName the username of the headbooker
      * @return the {@link Booking} or null, returns a booking when successful, null when not
      */
-    @GetMapping("userName={userName}")
-    public Booking getBookingFromRepository(@PathVariable String userName) {
+    @GetMapping(params = "userName")
+    public Booking getBookingFromRepository(@RequestParam("userName") String userName) {
         System.out.println("get by username");
         return BookingRepository.getInstance().findBooking(userName);
     }
@@ -43,8 +43,8 @@ public class BookingController {
      * @param lastName the last name of the headbooker
      * @return the {@link Booking} or null, returns a booking when successful, null when not
      */
-    @GetMapping("?firstName={firstName}&lastName={lastName}")
-    public Booking getBookingFromRepository(@PathVariable String firstName,@PathVariable String lastName) {
+    @GetMapping(params = {"firstName","lastName"})
+    public Booking getBookingFromRepository(@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName) {
         System.out.println("get by full name");
         return BookingRepository.getInstance().findBooking(firstName, lastName);
     }
@@ -75,8 +75,8 @@ public class BookingController {
      * @param id the id of the booking to overwrite
      * @param booking an automatically constructed booking object from the provided JSON body
      */
-    @PatchMapping("bookingId={id}")
-    public void patchBooking(@PathVariable long id, @RequestBody Booking booking) {
+    @PatchMapping(params = "bookingId")
+    public void patchBooking(@RequestParam("bookingId") long id, @RequestBody Booking booking) {
         BookingRepository.getInstance().findAndUpdate(id, booking);
     }
 
@@ -85,8 +85,8 @@ public class BookingController {
      * @param id the id of the booking to delete
      * TODO: return something when successful or not
      */
-    @DeleteMapping("bookingId={id}")
-    public void deleteBooking(@PathVariable long id) {
+    @DeleteMapping(params = "bookingId")
+    public void deleteBooking(@RequestParam("bookingId") long id) {
         BookingRepository.getInstance().deleteBooking(id);
     }
 }
