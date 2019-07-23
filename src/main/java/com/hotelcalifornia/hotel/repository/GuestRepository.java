@@ -28,6 +28,8 @@ public class GuestRepository implements Repository <Guest> {
     @Override
     public void create(Guest guest) {
         guest = new Guest();
+        guest.setFirstName(guest.getFirstName());
+        guest.setLastName(guest.getLastName());
         guest.setAddress(guest.getAddress());
         guest.setHouseNumber(guest.getHouseNumber());
         guest.setCity(guest.getCity());

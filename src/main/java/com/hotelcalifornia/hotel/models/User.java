@@ -9,7 +9,6 @@ public class User {
     private String userId;
     private String userName;
     private String password;
-    private static int count = 1;
 
     private EUserType type;
 
