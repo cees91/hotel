@@ -1,6 +1,8 @@
 package com.hotelcalifornia.hotel.repository;
 
 
+import com.hotelcalifornia.hotel.exceptions.EmptyRepoException;
+import com.hotelcalifornia.hotel.exceptions.NotFoundException;
 import com.hotelcalifornia.hotel.models.Booking;
 import com.hotelcalifornia.hotel.utils.EnvironmentSingleton;
 import org.springframework.stereotype.Repository;
@@ -49,20 +51,23 @@ public class BookingRepository {
     }
 
     /**
-     * Finds and returns an arraylist of bookings. Can have null
+     * Finds and returns an arraylist of bookings.
      * @param idList a list of ids to search on
-     * @return an ArrayList of bookings containing the found bookings, if none are found, the list returns empty
+     * @return an ArrayList of bookings containing the found bookings, if none are found an exception is thrown
      */
     /*  TODO: it might be nice to reuse the findBooking function we already have,
          but i don't know which one is more efficient, .contains() or our own function
      */
-    public ArrayList<Booking> findBookings(List<Long> idList) {
+    public ArrayList<Booking> findBookings(List<Long> idList) throws RuntimeException {
         ArrayList<Booking> foundBookingsList = new ArrayList<>();
         for (Booking currentBooking : this.BookingList) {
             if (idList.contains(currentBooking.getBookingId())) {
                 // currentBooking id is in the given idList, add it to the foundBookingsList
                 foundBookingsList.add(currentBooking);
             }
+        }
+        if(foundBookingsList.isEmpty()) {
+            throw new NotFoundException();
         }
         return foundBookingsList;
     }
@@ -72,13 +77,13 @@ public class BookingRepository {
      * @param id of the booking
      * @return a {@link Booking} or null when unsuccessful
      */
-    public Booking findBooking(long id) {
+    public Booking findBooking(long id) throws RuntimeException {
         for (Booking currentBooking : this.BookingList) {
             if (currentBooking.getBookingId() == id) {
                 return currentBooking;
             }
         }
-        return null;
+        throw new NotFoundException();
     }
 
     /**
@@ -87,13 +92,13 @@ public class BookingRepository {
      * @param userName the username of the headbooker
      * @return a {@link Booking} or null when unsuccessful
      */
-    public Booking findBooking(String userName) {
+    public Booking findBooking(String userName) throws RuntimeException {
         for (Booking currentBooking : this.BookingList) {
             if (currentBooking.getHeadBooker().getUserName().equals(userName)) {
                 return currentBooking;
             }
         }
-        return null;
+        throw new NotFoundException();
     }
 
     /**
@@ -103,14 +108,14 @@ public class BookingRepository {
      * @param lastName  the last name of the headbooker
      * @return a {@link Booking} or null when unsuccessful
      */
-    public Booking findBooking(String firstName, String lastName) {
+    public Booking findBooking(String firstName, String lastName) throws RuntimeException {
         for (Booking currentBooking : this.BookingList) {
             if (currentBooking.getHeadBooker().getFirstName().equals(firstName) &&
                     currentBooking.getHeadBooker().getLastName().equals(lastName)) {
                 return currentBooking;
             }
         }
-        return null;
+        throw new NotFoundException();
     }
 
     /**
@@ -118,15 +123,17 @@ public class BookingRepository {
      * @param id the booking id of the booking to update
      * @param booking a new booking object to replace the old one
      */
-    public void findAndUpdate(long id, Booking booking) {
-        for (Booking currentBooking : this.BookingList) {
-            if (currentBooking.getBookingId() == id) {
-                // set the id of the newly created booking to the id of the old booking
-                booking.setBookingId(id);
-                // and overwrite old booking with new booking
-                this.BookingList.set(this.BookingList.indexOf(currentBooking),booking);
-            }
+    public void findAndUpdate(long id, Booking booking) throws RuntimeException {
+        Booking foundBooking;
+        try {
+            foundBooking = findBooking(id);
+        } catch (NotFoundException e) {
+            throw e;
         }
+        // set the id of the newly created booking to the id of the old booking
+        booking.setBookingId(id);
+        // and overwrite old booking with new booking
+        this.BookingList.set(this.BookingList.indexOf(foundBooking),booking);
     }
 
     public ArrayList<Booking> findMultipleBookings(ArrayList<Booking> bookings) {
@@ -138,16 +145,29 @@ public class BookingRepository {
         this.BookingList.add(booking);
     }
 
-    public void update(Booking booking) {
+    public void update(Booking booking) throws RuntimeException {
         long id = booking.getBookingId();
-        findAndUpdate(id, booking);
+        try {
+            findAndUpdate(id, booking);
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
-    public void deleteBooking(long id) {
-        this.BookingList.remove(findBooking(id));
+    public void deleteBooking(long id) throws RuntimeException {
+        try {
+            this.BookingList.remove(findBooking(id));
+        } catch (NotFoundException e) {
+            throw e;
+        }
+
+
     }
 
-    public ArrayList<Booking> getBookings() {
+    public ArrayList<Booking> getBookings() throws RuntimeException {
+        if(this.BookingList.isEmpty()) {
+            throw new EmptyRepoException();
+        }
         return this.BookingList;
     }
 }

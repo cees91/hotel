@@ -4,17 +4,16 @@ import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
 
 import java.util.Date;
-import java.util.UUID;
 
 import static java.lang.Long.MAX_VALUE;
 
 public class Booking {
 
-    private long bookingId;
+    private long bookingId = -1;
 
     // variables regarding payment
     private boolean bookingPayed;
-    private double price;
+    private double price = -1;
     private double amountPayed;
 
     // the user that booked the room(s)
@@ -31,8 +30,19 @@ public class Booking {
     private Date bookingDate;
     // basic constructor without arguments
     public Booking() {
-        this.bookingId = (long)(Math.random() * MAX_VALUE);
+        this.bookingId = generateId();
         this.bookingDate = new Date(); // creating a Date without specifying a date gives it the date of today
+    }
+
+    /**
+     * do 1+ so the ID is never 0
+     * Math.random() returns a random value between 0 and 0.999...
+     * multiply by the max of a long
+     * -1 to not roll over the long value(because we did +1 in the beginning)
+     * @return the new id as a long
+     */
+    private long generateId() {
+        return 1+(long)(Math.random() * MAX_VALUE-1);
     }
 
     public int getNumberOfGuests() {
@@ -117,5 +127,12 @@ public class Booking {
 
     public Date getBookingDate() {
         return this.bookingDate;
+    }
+
+    public boolean isEmpty() {
+        if(this.getBookingId() == 0) {
+            return true;
+        }
+        return false;
     }
 }
