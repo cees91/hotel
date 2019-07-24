@@ -1,7 +1,6 @@
 package com.hotelcalifornia.hotel.controllers;
 
-import com.hotelcalifornia.hotel.Enums.ERoomType;
-import com.hotelcalifornia.hotel.models.Booking;
+import com.hotelcalifornia.hotel.exceptions.BadRequestException;
 import com.hotelcalifornia.hotel.models.Room;
 import com.hotelcalifornia.hotel.repository.RoomRepository;
 import com.hotelcalifornia.hotel.utils.CSVReader;
@@ -11,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @RestController()
 @RequestMapping("api/rooms")
@@ -70,8 +68,9 @@ public class RoomController {
         }
         return rooms;
     }
+
     @GetMapping(params = "numberOfPeople")
-    public List<Room> findRooms(@RequestParam("numberOfPeople") int numberOfPeople){
+    public List<Room> findRooms(@RequestParam("numberOfPeople") int numberOfPeople) {
         List<Room> rooms = null;
         try {
             rooms = RoomRepository.getInstance().filterRoomsByPeople(numberOfPeople);
@@ -80,17 +79,26 @@ public class RoomController {
         }
         return rooms;
     }
-    @GetMapping(params = {"numberOfPeople", "dateRange"})
-    public List<Room> findRooms(@RequestParam("numberOfPeople") int numberOfPeople, @RequestParam("dateRange") String dates){
-        return RoomRepository.getInstance().findAvailableRooms(numberOfPeople,dates);
+
+    @GetMapping(params = {"adults", "start", "end"})
+    public ArrayList<Room> findRooms(@RequestParam("adults") int adults, @RequestParam("start") String start, @RequestParam("end") String end) {
+        ArrayList<Room> rooms;
+        try {
+            rooms = RoomRepository.getInstance().findAvailableRooms(adults, start, end);
+        } catch (ParseException error) {
+            throw new BadRequestException("Something went wrong with the supplied dates.");
+        } catch (Exception error) {
+            throw new BadRequestException("Couldn't find any rooms with the supplied data.");
+        }
+        return rooms;
     }
+
     private ArrayList<Room> readCSVFile() {
         CSVReader reader = new CSVReader();
         ArrayList<Room> csvRooms = reader.csvReader();
 
         return csvRooms;
     }
-
 
 
 }

@@ -5,7 +5,11 @@ import com.hotelcalifornia.hotel.models.Room;
 import com.hotelcalifornia.hotel.utils.CSVReader;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -57,6 +61,7 @@ public class RoomRepository {
                 .collect(Collectors.toList());
         return rooms;
     }
+
     public List<Room> filterRoomsByPeople(int numberOfPeople) {
         List<Room> rooms = this.
                 rooms.
@@ -65,14 +70,20 @@ public class RoomRepository {
                 .collect(Collectors.toList());
         return rooms;
     }
-    public List<Room> findAvailableRooms(int numberOfPeople, String dates){
-        List<Room> rooms = this.
-                rooms.
-                stream().
-                filter(currentRoom -> (currentRoom.getAdults() + currentRoom.getChildren()) >= numberOfPeople)
-                .collect(Collectors.toList());
-        return rooms;
+
+    public ArrayList<Room> findAvailableRooms(int numberOfAdults, String start, String end) throws ParseException {
+        Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(start);
+        Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(end);
+        ArrayList<Room> foundRooms = new ArrayList<>();
+        for (Room currentRoom : this.rooms) {
+            if (currentRoom.getAdults() >= numberOfAdults && (currentRoom.getStartDate() == null || currentRoom.getStartDate().before(startDate)) && (currentRoom.getEndDate() == null || currentRoom.getEndDate().after(endDate)) )
+            {
+                foundRooms.add(currentRoom);
+            }
+        }
+        return foundRooms;
     }
+
     public Room bookRoom(int roomNumber) throws Exception {
         Room room = filterRooms(roomNumber);
         try {
