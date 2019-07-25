@@ -22,7 +22,6 @@ public class RoomController {
 
     private ArrayList<Room> rooms;
 
-
     public RoomController() {
         this.rooms = readCSVFile();
     }
