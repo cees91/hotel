@@ -2,6 +2,11 @@ package com.hotelcalifornia.restaurant.models;
 
 import java.util.List;
 
+
+/**
+ * This POJO Bill class contains information about the costs for food and drink, as well as a list of what was
+ * ordered
+ */
 public class Bill {
 
     private int billId;
