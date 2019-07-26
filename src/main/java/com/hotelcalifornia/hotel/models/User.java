@@ -1,29 +1,25 @@
 package com.hotelcalifornia.hotel.models;
 
 import com.hotelcalifornia.hotel.Enums.EUserType;
+import javax.persistence.*;
 
-import java.util.UUID;
 
+@Entity
 public class User {
 
-    private String userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Access(AccessType.PROPERTY)
+    private long Id;
     private String userName;
     private String password;
-
+    private String firstName;
+    private String lastName;
     private EUserType type;
 
+
     public User() {
-    }
 
-    public User(String userName, String password, EUserType type) {
-        this.userName = userName;
-        this.password = password;
-        this.userId = UUID.randomUUID().toString();;
-        this.type = type;
-    }
-
-    public User(String userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -42,8 +38,12 @@ public class User {
         this.password = password;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setId(long id){
+        this.Id = Id;
+    }
+
+    public long getId() {
+        return Id;
     }
 
     public EUserType getType() {
@@ -53,4 +53,21 @@ public class User {
     public void setType(EUserType type) {
         this.type = type;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
 }

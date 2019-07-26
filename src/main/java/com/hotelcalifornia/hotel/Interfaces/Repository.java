@@ -1,6 +1,5 @@
 package com.hotelcalifornia.hotel.Interfaces;
 
-import java.util.List;
 
 public interface Repository <T> {
 
