@@ -61,7 +61,7 @@ public class RoomController {
                     i++;
                 }
             }
-            currentBooking.setBookedRooms(rooms);
+            //currentBooking.setBookedRooms(rooms);
             if (numberOfGuests == 0) {
                 return true;
             }

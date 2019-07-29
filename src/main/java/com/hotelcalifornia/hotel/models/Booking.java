@@ -3,54 +3,46 @@ package com.hotelcalifornia.hotel.models;
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
 
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
+
 
 import static java.lang.Long.MAX_VALUE;
 
+@Entity
+@Table(name="Bookings")
 public class Booking {
 
-    private long bookingId = -1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long bookingId;
 
     // variables regarding payment
     private boolean bookingPayed;
-    private double price = -1;
+    @Column(columnDefinition = "double DEFAULT 0.0")
+    private double price;
     private double amountPayed;
 
     // the user that booked the room(s)
-    private Guest headBooker;
+    private long headBookerId;
     private int numberOfGuests;
-    // list of rooms that are booked
-    private Room[] bookedRooms;
+    // list of room id's that are booked, comma separated
+    private String bookedRooms;
     // enum variables
+    @Enumerated(EnumType.ORDINAL)
     private EBookingStatus bookingStatus;
+    @Enumerated(EnumType.ORDINAL)
     private EPaymentMethod paymentMethod;
     // dates
-    private Date startDate;
-    private Date endDate;
-    private Date bookingDate;
-    // basic constructor without arguments
-    public Booking() {
-        this.bookingId = generateId();
-        this.bookingDate = new Date(); // creating a Date without specifying a date gives it the date of today
-    }
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
 
-    /**
-     * do 1+ so the ID is never 0
-     * Math.random() returns a random value between 0 and 0.999...
-     * multiply by the max of a long
-     * -1 to not roll over the long value(because we did +1 in the beginning)
-     * @return the new id as a long
-     */
-    private long generateId() {
-        return 1+(long)(Math.random() * MAX_VALUE-1);
-    }
+    @Column(columnDefinition = "datetime DEFAULT NOW()")
+    private LocalDate dateBooking;
 
     public int getNumberOfGuests() {
         return numberOfGuests;
     }
-
-    // full constructor
-
     public void setNumberOfGuests(int numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
@@ -69,11 +61,11 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public Guest getHeadBooker() {
-        return this.headBooker;
+    public long getHeadBookerId() {
+        return this.headBookerId;
     }
-    public void setHeadBooker(Guest headBooker) {
-        this.headBooker = headBooker;
+    public void setHeadBookerId(long headBookerId) {
+        this.headBookerId = headBookerId;
     }
 
     public double getPrice() {
@@ -90,25 +82,25 @@ public class Booking {
         this.amountPayed = amountPayed;
     }
 
-    public Room[] getBookedRooms() {
+    public String getBookedRooms() {
         return this.bookedRooms;
     }
-    public void setBookedRooms(Room[] bookedRooms) {
+    public void setBookedRooms(String bookedRooms) {
         this.bookedRooms = bookedRooms;
     }
 
-    public Date getStartDate() {
-        return this.startDate;
+    public LocalDate getDateStart() {
+        return this.dateStart;
     }
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public Date getEndDate() {
-        return this.endDate;
+    public LocalDate getDateEnd() {
+        return this.dateEnd;
     }
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public EBookingStatus getBookingStatus() {
@@ -125,8 +117,8 @@ public class Booking {
         this.paymentMethod = paymentMethod;
     }
 
-    public Date getBookingDate() {
-        return this.bookingDate;
+    public LocalDate getDateBooking() {
+        return this.dateBooking;
     }
 
     public boolean isEmpty() {
