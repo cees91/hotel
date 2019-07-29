@@ -29,3 +29,4 @@ build/
 
 ### VS Code ###
 .vscode/
+additional-spring-configuration-metadata.json
