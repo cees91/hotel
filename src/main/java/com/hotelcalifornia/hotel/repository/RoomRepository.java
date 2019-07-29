@@ -40,7 +40,7 @@ public class RoomRepository {
 
     public List<Room> getAvailableRooms() {
         List<Room> availableRooms = this.rooms.stream().filter(room -> room.isAvailable()).collect(Collectors.toList());
-        ;
+
         return availableRooms;
     }
 
