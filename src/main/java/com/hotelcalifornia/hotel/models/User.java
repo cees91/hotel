@@ -7,19 +7,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
+@Table(name="Users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.PROPERTY)
     private long Id;
     private String userName;
     private String password;
     private String firstName;
     private String lastName;
+    @Enumerated(EnumType.ORDINAL)
     private EUserType type;
+
+    @OneToMany
+    private List<Booking> bookingsOfUser;
 
 
     public User() {

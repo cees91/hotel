@@ -31,7 +31,7 @@ public class Booking {
     private double amountPayed;
 
     // the user that booked the room(s)
-    @OneToMany
+    @ManyToOne
     private User headBooker;
     @NotNull
     private int numberOfGuests;
