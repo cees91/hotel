@@ -39,7 +39,7 @@ public class CSVReader {
                     children = Integer.parseInt(values[3]);
                     bed = EBedType.valueOf(values[4].trim()); // Single, Double bed
                     disabled = values.length > 5 && values[5].equals("yes");
-                    csvRooms.add(new Room(roomNumber, floor, roomType, adults, children, bed, disabled));
+//                    csvRooms.add(new Room(roomNumber, floor, roomType, adults, children, bed, disabled));
                     i++;
                 }
                 return csvRooms;

@@ -1,10 +1,25 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hotelcalifornia.hotel.Enums.EBedType;
 import com.hotelcalifornia.hotel.Enums.ERoomType;
+import org.apache.tomcat.jni.Local;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
+@Table(name="rooms")
 
 public class Room {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Access(AccessType.PROPERTY)
+    private long id;
     private int roomNumber;
     private int floor;
     private ERoomType type;
@@ -13,22 +28,44 @@ public class Room {
     private EBedType bedType;
     private boolean isDisabled;
     private boolean isAvailable;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+
+    private LocalDate endDate;
     private double price;
 
     //default constructor for testing purposes
     public Room() { }
 
-    public Room(int roomNumber, int floor, ERoomType type, int adults, int children, EBedType bedType, boolean isDisabled) {
-        this.roomNumber = roomNumber;
-        this.floor = floor;
-        this.type = type;
-        this.adults = adults;
-        this.children = children;
-        this.bedType = bedType;
-        this.isDisabled = isDisabled;
-        this.isAvailable = true;
+
+    @ManyToMany
+    private Set<Booking> bookings;
+
+
+    public long getId() {
+    return id;
+}
+
+    public void setId(long id) {
+        this.id = id;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
     public int getRoomNumber() {
         return roomNumber;
     }

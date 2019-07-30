@@ -35,7 +35,7 @@ public class Booking {
     private User headBooker;
     @NotNull
     private int numberOfGuests;
-    // list of room id's that are booked, comma separated
+    // list of rooms that are booked
     @ManyToMany
     private List<Room> bookedRooms;
     // enum variables
