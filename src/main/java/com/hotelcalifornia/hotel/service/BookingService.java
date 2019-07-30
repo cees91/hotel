@@ -26,7 +26,7 @@ public class BookingService {
         Booking foundBooking = null;
         for (Booking currentBooking : bookingRepository.findAll()) {
             foundBooking = bookings.stream()
-                    .filter(x -> currentBooking.getBookingId() == x.getBookingId())
+                    .filter(x -> currentBooking.getId() == x.getId())
                     .findAny()
                     .orElse(null);
             if (foundBooking != null) {
@@ -47,7 +47,7 @@ public class BookingService {
     public ArrayList<Booking> findBookings(List<Long> idList) throws RuntimeException {
         ArrayList<Booking> foundBookingsList = new ArrayList<>();
         for (Booking currentBooking : bookingRepository.findAll()) {
-            if (idList.contains(currentBooking.getBookingId())) {
+            if (idList.contains(currentBooking.getId())) {
                 // currentBooking id is in the given idList, add it to the foundBookingsList
                 foundBookingsList.add(currentBooking);
             }
@@ -65,7 +65,7 @@ public class BookingService {
      */
     public Booking findBooking(long id) throws RuntimeException {
         for (Booking currentBooking : bookingRepository.findAll()) {
-            if (currentBooking.getBookingId() == id) {
+            if (currentBooking.getId() == id) {
                 return currentBooking;
             }
         }
@@ -117,7 +117,7 @@ public class BookingService {
             throw e;
         }
         // set the id of the newly created booking to the id of the old booking
-        booking.setBookingId(id);
+        booking.setId(id);
         // and overwrite old booking with new booking
         bookingRepository.findAll().set(bookingRepository.findAll().indexOf(foundBooking),booking);
     }
@@ -132,7 +132,7 @@ public class BookingService {
     }
 
     public void update(Booking booking) throws RuntimeException {
-        long id = booking.getBookingId();
+        long id = booking.getId();
         try {
             findAndUpdate(id, booking);
         } catch (NotFoundException e) {

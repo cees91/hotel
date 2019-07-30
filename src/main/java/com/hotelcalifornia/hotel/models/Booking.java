@@ -2,12 +2,12 @@ package com.hotelcalifornia.hotel.models;
 
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-
-
-import static java.lang.Long.MAX_VALUE;
+import java.util.List;
 
 @Entity
 @Table(name="Bookings")
@@ -15,29 +15,43 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bookingId;
+    private long id;
 
     // variables regarding payment
+    @NotNull
+    @ColumnDefault("FALSE")
     private boolean bookingPayed;
-    @Column(columnDefinition = "double DEFAULT 0.0")
+
+    @NotNull
+    @ColumnDefault("0.0")
     private double price;
+
+    @NotNull
+    @ColumnDefault("0.0")
     private double amountPayed;
 
     // the user that booked the room(s)
-    private long headBookerId;
+    @OneToMany
+    private User headBooker;
+    @NotNull
     private int numberOfGuests;
     // list of room id's that are booked, comma separated
-    private String bookedRooms;
+    @ManyToMany
+    private List<Room> bookedRooms;
     // enum variables
     @Enumerated(EnumType.ORDINAL)
     private EBookingStatus bookingStatus;
     @Enumerated(EnumType.ORDINAL)
     private EPaymentMethod paymentMethod;
+
     // dates
+    @NotNull
     private LocalDate dateStart;
+    @NotNull
     private LocalDate dateEnd;
 
-    @Column(columnDefinition = "datetime DEFAULT NOW()")
+    @NotNull
+    @ColumnDefault("NOW()")
     private LocalDate dateBooking;
 
     public int getNumberOfGuests() {
@@ -54,18 +68,18 @@ public class Booking {
         this.bookingPayed = bookingPayed;
     }
 
-    public long getBookingId() {
-        return bookingId;
+    public long getId() {
+        return id;
     }
-    public void setBookingId(long bookingId) {
-        this.bookingId = bookingId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public long getHeadBookerId() {
-        return this.headBookerId;
+    public User getHeadBooker() {
+        return this.headBooker;
     }
-    public void setHeadBookerId(long headBookerId) {
-        this.headBookerId = headBookerId;
+    public void setHeadBooker(User headBooker) {
+        this.headBooker = headBooker;
     }
 
     public double getPrice() {
@@ -82,10 +96,10 @@ public class Booking {
         this.amountPayed = amountPayed;
     }
 
-    public String getBookedRooms() {
+    public List<Room> getBookedRooms() {
         return this.bookedRooms;
     }
-    public void setBookedRooms(String bookedRooms) {
+    public void setBookedRooms(List<Room> bookedRooms) {
         this.bookedRooms = bookedRooms;
     }
 
@@ -122,7 +136,7 @@ public class Booking {
     }
 
     public boolean isEmpty() {
-        if(this.getBookingId() == 0) {
+        if(this.getId() == 0) {
             return true;
         }
         return false;
