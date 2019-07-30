@@ -58,6 +58,14 @@ public class RoomController {
         service.addRooms(rooms);
         return rooms;
     }
+
+    /**
+     * Finds the rooms that have not been booked yet
+     * @param adults
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     @RequestMapping(value = "/findrooms", method = RequestMethod.GET)
     public ArrayList<Room> findRooms(@RequestParam("adults") int adults, @RequestParam("startDate") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate startDate, @RequestParam("endDate") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate endDate) {
         ArrayList<Room> rooms;

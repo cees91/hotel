@@ -39,9 +39,9 @@ public class Room {
     public Room() { }
 
 
-    @ManyToMany
-    private Set<Booking> bookings;
-
+//    @ManyToMany
+//    private Set<Booking> bookings;
+//
 
     public long getId() {
     return id;
