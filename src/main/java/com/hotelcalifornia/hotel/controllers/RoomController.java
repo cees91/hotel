@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,39 +53,11 @@ public class RoomController {
         }
         return rooms;
     }
-
-    @RequestMapping(value = "/available", method = RequestMethod.GET)
-    public List<Room> getAvailableRooms() {
-        List<Room> rooms = null;
-        try {
-            rooms = service.getAvailableRooms();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ArrayList<Room> editRooms(@RequestBody ArrayList<Room> rooms){
+        service.addRooms(rooms);
         return rooms;
     }
-
-    @RequestMapping(value = "/type", method = RequestMethod.GET)
-    public List<Room> findRooms(@RequestParam("roomType") String roomType) {
-        List<Room> rooms = null;
-        try {
-            rooms = service.findRoom(roomType);
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-        return rooms;
-    }
-    @RequestMapping(value = "/amount", method = RequestMethod.GET)
-    public List<Room> findRooms(@RequestParam("numberOfPeople") int numberOfPeople) {
-        List<Room> rooms = null;
-        try {
-            rooms = service.filterRoomsByPeople(numberOfPeople);
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-        return rooms;
-    }
-
     @RequestMapping(value = "/findrooms", method = RequestMethod.GET)
     public ArrayList<Room> findRooms(@RequestParam("adults") int adults, @RequestParam("startDate") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate startDate, @RequestParam("endDate") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate endDate) {
         ArrayList<Room> rooms;

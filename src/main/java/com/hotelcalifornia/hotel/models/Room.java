@@ -7,7 +7,10 @@ import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
+
 @Entity
 @Table(name="rooms")
 
@@ -35,17 +38,12 @@ public class Room {
     //default constructor for testing purposes
     public Room() { }
 
-//    public Room(int roomNumber, int floor, ERoomType type, int adults, int children, EBedType bedType, boolean isDisabled) {
-//        this.roomNumber = roomNumber;
-//        this.floor = floor;
-//        this.type = type;
-//        this.adults = adults;
-//        this.children = children;
-//        this.bedType = bedType;
-//        this.isDisabled = isDisabled;
-//        this.isAvailable = true;
-//    }
-public long getId() {
+
+    @ManyToMany
+    private Set<Booking> bookings;
+
+
+    public long getId() {
     return id;
 }
 
