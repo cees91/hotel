@@ -134,9 +134,7 @@ public class BookingRepository {
         return foundBookings;
     }
 
-    public void create(Booking booking) {
-        this.BookingList.add(booking);
-    }
+
 
     public void update(Booking booking) {
         long id = booking.getBookingId();

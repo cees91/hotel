@@ -1,10 +1,12 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.hotelcalifornia.hotel.Enums.EUserType;
+
+import javax.persistence.Entity;
+
+@Entity
 public class Guest extends User {
 
-    private String customerId;
-    public String firstName;
-    public String lastName;
     private String phoneNumber;
     private String address;
     private String houseNumber;
@@ -20,9 +22,7 @@ public class Guest extends User {
     public Guest(User user, String firstName, String lastName, String phoneNumber, String address, String houseNumber, String postcode, String city, String country, String emailAddress) {
         this.setUserName(user.getUserName());
         this.setPassword(user.getPassword());
-        this.setType("guest");
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.setType(EUserType.Guest);
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.houseNumber = houseNumber;
@@ -30,23 +30,9 @@ public class Guest extends User {
         this.city = city;
         this.country = country;
         this.emailAddress = emailAddress;
+        this.setId(user.getId());
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
