@@ -3,11 +3,12 @@ package com.hotelcalifornia.hotel.repository;
 
 import com.hotelcalifornia.hotel.models.Booking;
 import com.hotelcalifornia.hotel.utils.EnvironmentSingleton;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class BookingRepository {
 
     private static BookingRepository instance = null;
@@ -29,7 +30,7 @@ public class BookingRepository {
 
     /**
      * Finds and returns an arraylist of bookings. Can have null
-     * @param bookings
+     * @param bookings {@link Booking}
      * @return ArrayList of bookings
      */
     public ArrayList<Booking> findBookings(ArrayList<Booking> bookings) {
@@ -58,8 +59,8 @@ public class BookingRepository {
     public ArrayList<Booking> findBookings(List<Long> idList) {
         ArrayList<Booking> foundBookingsList = new ArrayList<>();
         for (Booking currentBooking : this.BookingList) {
-            // currentBooking id is in the given idList, add it to the foundBookingsList
             if (idList.contains(currentBooking.getBookingId())) {
+                // currentBooking id is in the given idList, add it to the foundBookingsList
                 foundBookingsList.add(currentBooking);
             }
         }

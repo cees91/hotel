@@ -12,7 +12,7 @@ import java.util.*;
  * It can be used to find bookings, show a list of bookings, save new bookings or edit bookings.
  */
 @RestController()
-@RequestMapping("bookings")
+@RequestMapping("api/bookings")
 public class BookingController {
     /**
      * searches for a booking in the registered list by booking id
@@ -66,8 +66,7 @@ public class BookingController {
      */
     @PostMapping
     public void saveBooking(@RequestBody Booking booking) {
-        BookingRepository bookingRepo = BookingRepository.getInstance();
-        bookingRepo.create(booking);
+        BookingRepository.getInstance().create(booking);
     }
 
     /**

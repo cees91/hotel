@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class GuestController extends UserController {
 
-    static ArrayList<Guest> guests = new ArrayList<Guest>();
+    static ArrayList<Guest> guests = new ArrayList<>();
 
     //create guest account
     public void createGuest(Guest guest){
