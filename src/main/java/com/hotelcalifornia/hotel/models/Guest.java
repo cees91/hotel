@@ -3,11 +3,13 @@ package com.hotelcalifornia.hotel.models;
 import com.hotelcalifornia.hotel.Enums.EUserType;
 
 import javax.persistence.Entity;
+
 import javax.persistence.Id;
+
 
 @Entity
 public class Guest extends User {
-
+  
     @Id
     private long id;
 
@@ -36,6 +38,7 @@ public class Guest extends User {
 //        this.emailAddress = emailAddress;
 //        this.setId(user.getId());
 //    }
+
 
 
     public String getPhoneNumber() {

@@ -18,10 +18,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.PROPERTY)
     private long id;
+
     private String userName;
     private String password;
     private String firstName;
     private String lastName;
+
     @Enumerated(EnumType.ORDINAL)
     private EUserType type;
     @OneToMany
@@ -37,6 +39,7 @@ public class User {
 
     public void setBookingsOfUser(List<Booking> bookingsOfUser) {
         this.bookingsOfUser = bookingsOfUser;
+
     }
 
     public String getUserName() {
@@ -61,6 +64,7 @@ public class User {
 
     public void setId(long id){
         this.id = id;
+
     }
 
     public EUserType getType() {

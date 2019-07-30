@@ -44,6 +44,7 @@ public class UserController {
 
     @RequestMapping(method=RequestMethod.GET, value="/find/{id}")
     public User findUserById(@PathVariable long id) {
+
         return userService.findById(id);
     }
 
@@ -57,7 +58,6 @@ public class UserController {
      * Deletes user accounts
      * @param id or user
      */
-
     @RequestMapping(method = RequestMethod.DELETE, value="/delete/{id}")
     public void deleteUserById(@PathVariable long id) {
             userService.deleteUserById(id);
