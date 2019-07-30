@@ -10,26 +10,33 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="Users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.PROPERTY)
-    private long Id;
+    private long id;
     private String userName;
     private String password;
     private String firstName;
     private String lastName;
     @Enumerated(EnumType.ORDINAL)
     private EUserType type;
-
     @OneToMany
     private List<Booking> bookingsOfUser;
 
-
     public User() {
 
+    }
+
+    public List<Booking> getBookingsOfUser() {
+        return bookingsOfUser;
+    }
+
+    public void setBookingsOfUser(List<Booking> bookingsOfUser) {
+        this.bookingsOfUser = bookingsOfUser;
     }
 
     public String getUserName() {
@@ -48,12 +55,12 @@ public class User {
         this.password = password;
     }
 
-    public void setId(long id){
-        this.Id = Id;
+    public long getId() {
+        return id;
     }
 
-    public long getId() {
-        return Id;
+    public void setId(long id){
+        this.id = id;
     }
 
     public EUserType getType() {

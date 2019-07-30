@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,7 @@ public class Booking {
 
     // the user that booked the room(s)
     @ManyToOne
-    private User headBooker;
+    private User user;
     @NotNull
     private int numberOfGuests;
     // list of rooms that are booked
@@ -52,7 +53,7 @@ public class Booking {
 
     @NotNull
     @ColumnDefault("NOW()")
-    private LocalDate dateBooking;
+    private LocalDateTime dateBooking;
 
     public int getNumberOfGuests() {
         return numberOfGuests;
@@ -75,11 +76,11 @@ public class Booking {
         this.id = id;
     }
 
-    public User getHeadBooker() {
-        return this.headBooker;
+    public User getUser() {
+        return this.user;
     }
-    public void setHeadBooker(User headBooker) {
-        this.headBooker = headBooker;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getPrice() {
@@ -131,7 +132,7 @@ public class Booking {
         this.paymentMethod = paymentMethod;
     }
 
-    public LocalDate getDateBooking() {
+    public LocalDateTime getDateBooking() {
         return this.dateBooking;
     }
 
