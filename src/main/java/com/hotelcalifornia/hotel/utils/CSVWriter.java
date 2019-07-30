@@ -46,7 +46,7 @@ public class CSVWriter implements BookingSaver {
     }
     private String createColumns(Booking booking){
         String[] bookingColumns = new String[7];
-        bookingColumns[0] = booking.getBookingId();
+        bookingColumns[0] = (String.valueOf(booking.getBookingId()));
         bookingColumns[1] = Integer.toString(booking.getNumberOfGuests());
         bookingColumns[2] = getDateAsString(booking.getStartDate());
         bookingColumns[3] = getDateAsString(booking.getEndDate());

@@ -6,9 +6,11 @@ import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
 import java.util.Date;
 import java.util.UUID;
 
+import static java.lang.Long.MAX_VALUE;
+
 public class Booking {
 
-    private String bookingId;
+    private long bookingId;
 
     // variables regarding payment
     private boolean bookingPayed;
@@ -17,64 +19,30 @@ public class Booking {
 
     // the user that booked the room(s)
     private Guest headBooker;
+    private int numberOfGuests;
+    // list of rooms that are booked
+    private Room[] bookedRooms;
+    // enum variables
+    private EBookingStatus bookingStatus;
+    private EPaymentMethod paymentMethod;
+    // dates
+    private Date startDate;
+    private Date endDate;
+    private Date bookingDate;
+    // basic constructor without arguments
+    public Booking() {
+        this.bookingId = (long)(Math.random() * MAX_VALUE);
+        this.bookingDate = new Date(); // creating a Date without specifying a date gives it the date of today
+    }
 
     public int getNumberOfGuests() {
         return numberOfGuests;
     }
 
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
-    }
-
-    private int numberOfGuests;
-
-    // list of rooms that are booked
-    private Room[] bookedRooms;
-
-    // enum variables
-    private EBookingStatus bookingStatus;
-    private EPaymentMethod paymentMethod;
-
-    // dates
-    private Date startDate;
-    private Date endDate;
-    private Date bookingDate;
-
-    // basic constructor without arguments
-    public Booking() {
-        this.bookingId = UUID.randomUUID().toString();
-        this.bookingDate = new Date(); // creating a Date without specifying a date gives it the date of today
-    }
-
-    // constructor with amount of guests and start and end date
-    public Booking(int numberOfGuests, Date startDate, Date endDate) {
-        this.bookingId = UUID.randomUUID().toString();
-        this.numberOfGuests = numberOfGuests;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDate = new Date();
-    }
-
-    // constructor with user, amount of guests and start and end date
-    public Booking(Guest headBooker, int numberOfGuests, Date startDate, Date endDate) {
-        this.bookingId = UUID.randomUUID().toString();
-        this.numberOfGuests = numberOfGuests;
-        this.headBooker = headBooker;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDate = new Date();
-    }
-
     // full constructor
 
-    public Booking(Room[] bookedRooms, Guest headBooker, int numberOfGuests, Date startDate, Date endDate) {
-        this.bookingId = UUID.randomUUID().toString();
-        this.bookedRooms = bookedRooms;
-        this.headBooker = headBooker;
+    public void setNumberOfGuests(int numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDate = new Date();
     }
 
     public boolean isBookingPayed() {
@@ -84,10 +52,10 @@ public class Booking {
         this.bookingPayed = bookingPayed;
     }
 
-    public String getBookingId() {
+    public long getBookingId() {
         return bookingId;
     }
-    public void setBookingId(String bookingId) {
+    public void setBookingId(long bookingId) {
         this.bookingId = bookingId;
     }
 

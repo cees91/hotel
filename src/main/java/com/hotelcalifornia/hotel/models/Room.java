@@ -3,6 +3,8 @@ package com.hotelcalifornia.hotel.models;
 import com.hotelcalifornia.hotel.Enums.EBedType;
 import com.hotelcalifornia.hotel.Enums.ERoomType;
 
+import java.util.Date;
+
 public class Room {
 
     private int roomNumber;
@@ -13,6 +15,10 @@ public class Room {
     private EBedType bedType;
     private boolean isDisabled;
     private boolean isAvailable;
+
+
+    private Date startDate;
+    private Date endDate;
     private double price;
 
     //default constructor for testing purposes
@@ -29,6 +35,21 @@ public class Room {
         this.isAvailable = true;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
     public int getRoomNumber() {
         return roomNumber;
     }

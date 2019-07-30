@@ -2,149 +2,90 @@ package com.hotelcalifornia.hotel.controllers;
 
 
 import com.hotelcalifornia.hotel.models.Booking;
-import com.hotelcalifornia.hotel.models.Guest;
-import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.repository.BookingRepository;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * This is the Booking controller.
- * It can be used to find bookings, show a list of bookings and update values in the bookings.
+ * It can be used to find bookings, show a list of bookings, save new bookings or edit bookings.
  */
+@RestController()
+@RequestMapping("api/bookings")
 public class BookingController {
     /**
-     * searches for a booking in the registered list
-     * @param name the Username of the headbooker
+     * searches for a booking in the registered list by booking id
+     * @param id the id of the booking
      * @return the {@link Booking} or null, returns a booking when successful, null when not
-     * TODO don't return null, throw an exception
+     * TODO: don't return null, throw an exception
      */
-    public Booking getBookingFromRepository(String name) {
-        List<Booking> bookingsList = BookingRepository.getInstance().getBookings();
-
-        for(Booking currentValue : bookingsList) {
-            // see if the given name matches the booking name
-            if(currentValue.getHeadBooker().getUserName().equals(name)) {
-                return currentValue;
-            }
-        }
-        return null;
+    @GetMapping(params = "bookingId")
+    public Booking getBookingFromRepository(@RequestParam("bookingId") long id) {
+        System.out.println("get by id");
+        return BookingRepository.getInstance().findBooking(id);
     }
 
     /**
-     * returns the entire list of bookings in a nice string format
-     * @return a formatted string containing all the bookings
+     * searches for a booking in the registered list by username
+     * @param userName the username of the headbooker
+     * @return the {@link Booking} or null, returns a booking when successful, null when not
      */
-    public String showBookings() {
-        StringBuilder bookings = new StringBuilder("Booking ID \t\t\t\t\t\t\t\t| Date booked \t\t\t\t\t\t|" +
-                " Booking start date \t\t\t\t| Booking end date \t\t\t\t\t| Booking payed \n");
-        List<Booking> bookingsList = BookingRepository.getInstance().getBookings();
-
-        String bookingPayed;
-
-        for (Booking currentValue : bookingsList) {
-            //check if position is actually occupied
-            if (currentValue == null) {
-                continue;
-            }
-
-            if (currentValue.isBookingPayed()) {
-                bookingPayed = "Yes";
-            } else {
-                bookingPayed = "No";
-            }
-
-            bookings.append(currentValue.getBookingId()).append( " \t| ").append(currentValue.getBookingDate()).append(" \t| ")
-                    .append(currentValue.getStartDate()).append(" \t| ").append(currentValue.getEndDate()).append(" \t| ")
-                    .append(bookingPayed).append("\n");
-        }
-        return bookings.toString();
+    @GetMapping(params = "userName")
+    public Booking getBookingFromRepository(@RequestParam("userName") String userName) {
+        System.out.println("get by username");
+        return BookingRepository.getInstance().findBooking(userName);
     }
 
-
-    public Booking specifyGuestsAndDates() {
-
-        Scanner terminalInput = new Scanner(System.in);
-        Booking booking = new Booking();
-        try {
-            booking.setNumberOfGuests(specifyGuests(terminalInput));
-            booking.setEndDate( setEndDate(terminalInput));
-            booking.setStartDate(setFromDate(terminalInput));
-        } catch (Exception error) {
-            System.out.println("Incorrect date format: " + error + ". Enter 'b' to go back.");
-            terminalInput.nextLine();
-            return null;
-        }
-        return booking;
+    /**
+     * searches for a booking in the registered list by first AND last name
+     * @param firstName the first name of the headbooker
+     * @param lastName the last name of the headbooker
+     * @return the {@link Booking} or null, returns a booking when successful, null when not
+     */
+    @GetMapping(params = {"firstName","lastName"})
+    public Booking getBookingFromRepository(@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName) {
+        System.out.println("get by full name");
+        return BookingRepository.getInstance().findBooking(firstName, lastName);
     }
 
-    private int specifyGuests(Scanner terminal) {
-        System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println("Please enter the amount of guests you wish to stay with: ");
-        String guests = terminal.nextLine();
-        int guestNumber = Integer.parseInt(guests);
-        return guestNumber;
-
+    /**
+     * Get the entire list of bookings currently registered in the repository
+     * @return a list of booking objects, can be empty
+     */
+    @GetMapping
+    public List<Booking> getAllBookings() {
+        System.out.println("empty get");
+        return BookingRepository.getInstance().getBookings();
     }
 
-    private Date setFromDate(Scanner terminal) throws Exception {
-        System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println("Please enter the dates you wish to stay from (DD/MM/YYYY): ");
-        String date = terminal.nextLine();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date startDate = formatter.parse(date);
-        return startDate;
+    /**
+     * create and add a new booking to the booking repository
+     * @param booking a booking object, for POST calls, use JSON to create a valid booking object.
+     * TODO: create something that checks the validity of the booking object and returns if you are allowed to create an object or not
+     */
+    @PostMapping
+    public void saveBooking(@RequestBody Booking booking) {
+        BookingRepository.getInstance().create(booking);
     }
 
-    private Date setEndDate(Scanner terminal) throws Exception {
-        System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println("Please enter the date until you wish to stay (DD/MM/YYYY): ");
-        String date = terminal.nextLine();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date endDate = formatter.parse(date);
-        return endDate;
-    }
-    public void createAndSaveBooking(Booking booking){
-        User guest = login();
-        setUserDetails(booking, guest);
-        saveBooking(booking);
+    /**
+     * overwrite the booking that has the given id, with a new booking object constructed from the JSON body the PATCH call should provide
+     * @param id the id of the booking to overwrite
+     * @param booking an automatically constructed booking object from the provided JSON body
+     */
+    @PatchMapping(params = "bookingId")
+    public void patchBooking(@RequestParam("bookingId") long id, @RequestBody Booking booking) {
+        BookingRepository.getInstance().findAndUpdate(id, booking);
     }
 
-    private User login(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("User name: ");
-        String userName = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String enteredPassword = scanner.nextLine();
-        User user = new User();
-        return user;
-    }
-    private void setUserDetails(Booking booking, User user){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("First name: ");
-        String firstName = scanner.nextLine();
-        System.out.println("Last name: ");
-        String lastName = scanner.nextLine();
-        System.out.println("Address: ");
-        String address = scanner.nextLine();
-        System.out.println("houseNumber: ");
-        String houseNumber = scanner.nextLine();
-        System.out.println("Postcode: ");
-        String postcode = scanner.nextLine();
-        System.out.println("City: ");
-        String city = scanner.nextLine();
-        System.out.println("country: ");
-        String country = scanner.nextLine();
-        System.out.println("Email address: ");
-        String emailAddress = scanner.nextLine();
-        System.out.println("Telephone number: ");
-        String phoneNumber = scanner.nextLine();
-        Guest guest = new Guest(user, firstName, lastName, phoneNumber, address, houseNumber, postcode, city, country, emailAddress);
-        booking.setHeadBooker(guest);
-    }
-    private void saveBooking(Booking booking) {
-        BookingRepository bookingRepo = BookingRepository.getInstance();
-        bookingRepo.create(booking);
+    /**
+     * remove a booking from the booking repository
+     * @param id the id of the booking to delete
+     * TODO: return something when successful or not
+     */
+    @DeleteMapping(params = "bookingId")
+    public void deleteBooking(@RequestParam("bookingId") long id) {
+        BookingRepository.getInstance().deleteBooking(id);
     }
 }
