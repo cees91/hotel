@@ -3,11 +3,11 @@ package com.hotelcalifornia.hotel.models;
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 import static java.lang.Long.MAX_VALUE;
-
 public class Booking {
 
     private long bookingId;
