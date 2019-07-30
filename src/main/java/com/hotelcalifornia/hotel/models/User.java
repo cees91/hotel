@@ -1,27 +1,35 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.hotelcalifornia.hotel.Enums.EUserType;
+import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.List;
+
+@Entity
+@Table(name="Users")
 public class User {
 
-    private int userId = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Access(AccessType.PROPERTY)
+    private long Id;
     private String userName;
     private String password;
-    private static int count = 1;
+    private String firstName;
+    private String lastName;
+    @Enumerated(EnumType.ORDINAL)
+    private EUserType type;
 
-    // FIXME: should be an enum. -Joris
-    private String type;
+    @OneToMany
+    private List<Booking> bookingsOfUser;
+
 
     public User() {
-    }
 
-    public User(String userName, String password, String type) {
-        this.userName = userName;
-        this.password = password;
-        this.userId = count++;
-        this.type = type;
-    }
-
-    public User(int userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -40,15 +48,36 @@ public class User {
         this.password = password;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setId(long id){
+        this.Id = Id;
     }
 
-    public String getType() {
+    public long getId() {
+        return Id;
+    }
+
+    public EUserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EUserType type) {
         this.type = type;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
 }

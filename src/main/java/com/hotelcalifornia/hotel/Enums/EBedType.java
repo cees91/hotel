@@ -5,5 +5,5 @@ public enum EBedType {
     DoubleBed,
     TwoSingle,
     TwoDoubleOneSingleOneBaby,
-    TwoDoubleFourSIngleTwoBaby
+    TwoDoubleFourSingleTwoBaby
 }

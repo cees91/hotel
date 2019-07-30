@@ -1,13 +1,12 @@
 package com.hotelcalifornia.hotel.repository;
 
-
 import com.hotelcalifornia.hotel.models.Booking;
-import com.hotelcalifornia.hotel.utils.EnvironmentSingleton;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 public class BookingRepository {
 
     private static BookingRepository instance = null;
@@ -149,4 +148,9 @@ public class BookingRepository {
     public ArrayList<Booking> getBookings() {
         return this.BookingList;
     }
+=======
+@Repository
+public interface BookingRepository extends CrudRepository<Booking, Long> {
+    List<Booking> findAll();
+>>>>>>> 287d36d28e5007f1cdae6c2b0b065ec4a0090243
 }
