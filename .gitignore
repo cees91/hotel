@@ -3,6 +3,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+application.properties
+
 
 ### STS ###
 .apt_generated
@@ -29,4 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-additional-spring-configuration-metadata.json
