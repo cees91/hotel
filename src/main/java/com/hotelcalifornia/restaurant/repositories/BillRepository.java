@@ -1,16 +1,15 @@
 package com.hotelcalifornia.restaurant.repositories;
 
 import com.hotelcalifornia.restaurant.models.Bill;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class BillRepository {
-    private static BillRepository instance = new BillRepository();
+@Repository
+public interface BillRepository extends CrudRepository<Bill, Long> {
 
-    public static BillRepository getInstance() {
-        if (instance == null) {
-            return instance = new BillRepository();
-        }
-        return instance;
-    }
-    private BillRepository() {
-    }
+    void saveBill(Bill bill);
+    long findById(long id);
+    void deleteById(long id);
+
+
 }

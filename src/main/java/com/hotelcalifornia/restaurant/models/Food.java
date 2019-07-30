@@ -1,7 +1,13 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Food {
-    private int dishId;
+
+    @Id
+    private long dishId;
     private String type; //should change to an enum (appetizer, main, dessert...);
     private String name;
     private float price;
@@ -9,7 +15,7 @@ public class Food {
     private boolean isVegetarian;
     private boolean isVegan;
 
-    public int getDishId() {
+    public long getDishId() {
         return dishId;
     }
 

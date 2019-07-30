@@ -1,5 +1,7 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.List;
 
 
@@ -7,9 +9,10 @@ import java.util.List;
  * This POJO Bill class contains information about the costs for food and drink, as well as a list of what was
  * ordered
  */
+@Entity
 public class Bill {
-
-    private int billId;
+    @Id
+    private long billId;
     private float foodAmt;
     private float drinkAmt;
     private float taxRate;
@@ -17,7 +20,7 @@ public class Bill {
     private List<Food> foods;
     private List<Drink> drinks;
 
-    public int getBillId() {
+    public long getBillId() {
         return billId;
     }
 

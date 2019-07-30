@@ -1,19 +1,26 @@
 package com.hotelcalifornia.restaurant.models;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Drink {
-    private int drinkId;
+
+    @Id
+    private long drinkId;
     private String type;
     private String name;
     private String brand;
     private float price;
     private int quantity;
 
-    public int getDrinkId() {
+    public long getid() {
         return drinkId;
     }
 
-    public void setDrinkId(int drinkId) {
-        this.drinkId = drinkId;
+    public void setid(long id) {
+        this.drinkId = id;
     }
 
     public String getType() {

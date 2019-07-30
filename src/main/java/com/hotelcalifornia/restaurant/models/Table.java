@@ -1,9 +1,13 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.List;
 
+@Entity
 public class Table {
 
+    @Id
     private int tableId;
     private int capacity;
 
