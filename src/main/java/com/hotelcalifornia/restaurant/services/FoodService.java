@@ -11,13 +11,26 @@ public class FoodService {
     @Autowired
     private FoodRepository foodRepo;
 
-
-    //get food?
     //add food
-    void addFood(Food food) {
+    public void addFood(Food food) {
+        try {
+            foodRepo.save(food);
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println("Food cannot be added");
+        }
 
     }
     //delete food
+    public void deleteFood(long id) {
+        try {
+            foodRepo.deleteById(id);
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println("Food unsuccesfully deleted");
+        }
+    }
+
 
 
 }

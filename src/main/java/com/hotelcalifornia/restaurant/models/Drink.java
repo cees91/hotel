@@ -2,13 +2,15 @@ package com.hotelcalifornia.restaurant.models;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Drink {
 
     @Id
-    private long drinkId;
+    @GeneratedValue
+    private long id;
     private String type;
     private String name;
     private String brand;
@@ -16,11 +18,11 @@ public class Drink {
     private int quantity;
 
     public long getid() {
-        return drinkId;
+        return id;
     }
 
     public void setid(long id) {
-        this.drinkId = id;
+        this.id = id;
     }
 
     public String getType() {

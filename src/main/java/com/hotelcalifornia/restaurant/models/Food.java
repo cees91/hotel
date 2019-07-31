@@ -1,12 +1,15 @@
 package com.hotelcalifornia.restaurant.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
 public class Food {
 
     @Id
+    @GeneratedValue
     private long dishId;
     private String type; //should change to an enum (appetizer, main, dessert...);
     private String name;
@@ -14,6 +17,8 @@ public class Food {
     private int quantity;
     private boolean isVegetarian;
     private boolean isVegan;
+    List<Food> foodList;
+
 
     public long getDishId() {
         return dishId;
@@ -30,6 +35,7 @@ public class Food {
     public void setType(String type) {
         this.type = type;
     }
+
     public String getName() {
         return name;
     }

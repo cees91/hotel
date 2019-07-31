@@ -1,6 +1,8 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
 
@@ -8,15 +10,16 @@ import java.util.List;
 public class Table {
 
     @Id
-    private int tableId;
+    @GeneratedValue
+    private int id;
     private int capacity;
 
-    public int getTableId() {
-        return tableId;
+    public int getid() {
+        return id;
     }
 
-    public void setTableId(int tableId) {
-        this.tableId = tableId;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public int getCapacity() {

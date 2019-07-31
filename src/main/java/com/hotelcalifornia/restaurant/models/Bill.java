@@ -1,6 +1,9 @@
 package com.hotelcalifornia.restaurant.models;
 
+import org.hibernate.annotations.CollectionType;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
 
@@ -12,20 +15,22 @@ import java.util.List;
 @Entity
 public class Bill {
     @Id
-    private long billId;
+    @GeneratedValue
+    private long id;
     private float foodAmt;
     private float drinkAmt;
     private float taxRate;
     private float grandTotal;
+
     private List<Food> foods;
     private List<Drink> drinks;
 
-    public long getBillId() {
-        return billId;
+    public long getid() {
+        return id;
     }
 
-    public void setBillId(int billId) {
-        this.billId = billId;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public float getFoodAmt() {
