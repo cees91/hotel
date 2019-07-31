@@ -1,39 +1,14 @@
 package com.hotelcalifornia.hotel.repository;
 
-import com.hotelcalifornia.hotel.Interfaces.Repository;
 import com.hotelcalifornia.hotel.models.Employee;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class EmployeeRepository implements Repository<Employee> {
-
-    private static EmployeeRepository instance = null;
-    private ArrayList<Employee> employees = new ArrayList<>();
-
-    private EmployeeRepository() {
-        //Read the CSV and bind data to bookedRooms
-
-    }
-
-    public static EmployeeRepository getInstance() {
-        if (instance == null) {
-            instance = new EmployeeRepository();
-        }
-        return instance;
-    }
-
-    @Override
-    public void create(Employee employee) {
-
-    }
-
-    @Override
-    public void update(int userId) {
-
-    }
-
-    @Override
-    public void remove(int userId) {
-
-    }
+public interface EmployeeRepository extends CrudRepository<Employee, Long>{
+        List<Employee> findAll();
+        Employee findById(long id);
+        Employee findByUserName(String username);
+        Employee findByLastName(String lastName);
 }

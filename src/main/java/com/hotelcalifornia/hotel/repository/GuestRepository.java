@@ -1,50 +1,14 @@
 package com.hotelcalifornia.hotel.repository;
 
-import com.hotelcalifornia.hotel.Interfaces.Repository;
 import com.hotelcalifornia.hotel.models.Guest;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class GuestRepository implements Repository<Guest> {
+public interface GuestRepository extends CrudRepository<Guest, Long> {
 
-    private static GuestRepository instance = null;
-    private ArrayList<Guest> guests = new ArrayList<>();
-
-    private GuestRepository() {
-        //Read the CSV and bind data to bookedRooms
-
-    }
-
-    public static GuestRepository getInstance() {
-        if (instance == null) {
-            instance = new GuestRepository();
-        }
-        return instance;
-    }
-
-    @Override
-    public void create(Guest guest) {
-        guest = new Guest();
-        guest.setAddress(guest.getAddress());
-        guest.setHouseNumber(guest.getHouseNumber());
-        guest.setCity(guest.getCity());
-        guest.setCountry(guest.getCountry());
-        guest.setEmailAddress(guest.getEmailAddress());
-        guest.setPhoneNumber(guest.getPhoneNumber());
-        guest.setPostcode(guest.getPostcode());
-        guest.setUserName(guest.getUserName());
-        guest.setPassword(guest.getPassword());
-        guests.add(guest);
-    }
-
-    @Override
-    public void update(int userId) throws Exception {
-        guests.get(UserRepository.getInstance().findUserIndexById(userId));
-
-    }
-
-    @Override
-    public void remove(int userId) throws Exception {
-        guests.remove(UserRepository.getInstance().findUserIndexById(userId));
-    }
+    List<Guest> findAll();
+    Guest findById(long id);
+    Guest findByUserName(String username);
+    Guest findByLastName(String lastName);
 }
