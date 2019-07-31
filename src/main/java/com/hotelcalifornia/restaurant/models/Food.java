@@ -1,5 +1,6 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +18,8 @@ public class Food {
     private int quantity;
     private boolean isVegetarian;
     private boolean isVegan;
-    List<Food> foodList;
+    @ElementCollection
+    private List<Food> foodList;
 
 
     public long getDishId() {

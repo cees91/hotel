@@ -2,11 +2,11 @@ package com.hotelcalifornia.restaurant.models;
 
 import org.hibernate.annotations.CollectionType;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
-
 
 /**
  * This POJO Bill class contains information about the costs for food and drink, as well as a list of what was
@@ -22,7 +22,9 @@ public class Bill {
     private float taxRate;
     private float grandTotal;
 
+    @ElementCollection
     private List<Food> foods;
+    @ElementCollection
     private List<Drink> drinks;
 
     public long getid() {
