@@ -1,7 +1,11 @@
 package com.hotelcalifornia.restaurant;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class RestaurantApp {
     public static void main(String[] args) {
-        System.out.println("works!");
+        SpringApplication.run(RestaurantApp.class, args);
     }
 }

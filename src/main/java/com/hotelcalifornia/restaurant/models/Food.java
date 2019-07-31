@@ -1,15 +1,28 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.List;
+
+@Entity
 public class Food {
-    private int dishId;
+
+    @Id
+    @GeneratedValue
+    private long dishId;
     private String type; //should change to an enum (appetizer, main, dessert...);
     private String name;
     private float price;
     private int quantity;
     private boolean isVegetarian;
     private boolean isVegan;
+    @ElementCollection
+    private List<Food> foodList;
 
-    public int getDishId() {
+
+    public long getDishId() {
         return dishId;
     }
 

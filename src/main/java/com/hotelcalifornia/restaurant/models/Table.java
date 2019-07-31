@@ -1,18 +1,25 @@
 package com.hotelcalifornia.restaurant.models;
 
+import javax.annotation.processing.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.List;
 
+@Entity
 public class Table {
 
-    private int tableId;
+    @Id
+    @GeneratedValue
+    private int id;
     private int capacity;
 
-    public int getTableId() {
-        return tableId;
+    public int getid() {
+        return id;
     }
 
-    public void setTableId(int tableId) {
-        this.tableId = tableId;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public int getCapacity() {
