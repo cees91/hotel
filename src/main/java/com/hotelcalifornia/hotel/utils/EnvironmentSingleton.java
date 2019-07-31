@@ -9,7 +9,7 @@ public class EnvironmentSingleton {
     public BookingSaver saver;
 
     private EnvironmentSingleton() {
-        BookingSaver saver = new CSVWriter();
+        BookingSaver saver = null;
         this.saver = saver;
     }
 

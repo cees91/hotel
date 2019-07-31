@@ -2,45 +2,62 @@ package com.hotelcalifornia.hotel.models;
 
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import static java.lang.Long.MAX_VALUE;
+@Entity
+@Table(name="Bookings")
 public class Booking {
 
-    private long bookingId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     // variables regarding payment
+    @NotNull
+    @ColumnDefault("FALSE")
     private boolean bookingPayed;
+
+    @NotNull
+    @ColumnDefault("0.0")
     private double price;
+
+    @NotNull
+    @ColumnDefault("0.0")
     private double amountPayed;
 
     // the user that booked the room(s)
-    private Guest headBooker;
+    @ManyToOne
+    private User user;
+    @NotNull
     private int numberOfGuests;
     // list of rooms that are booked
-    private Room[] bookedRooms;
+    @ManyToMany
+    private List<Room> bookedRooms;
     // enum variables
+    @Enumerated(EnumType.ORDINAL)
     private EBookingStatus bookingStatus;
+    @Enumerated(EnumType.ORDINAL)
     private EPaymentMethod paymentMethod;
+
     // dates
-    private Date startDate;
-    private Date endDate;
-    private Date bookingDate;
-    // basic constructor without arguments
-    public Booking() {
-        this.bookingId = (long)(Math.random() * MAX_VALUE);
-        this.bookingDate = new Date(); // creating a Date without specifying a date gives it the date of today
-    }
+    @NotNull
+    private LocalDate dateStart;
+    @NotNull
+    private LocalDate dateEnd;
+
+    @NotNull
+    @ColumnDefault("NOW()")
+    private LocalDateTime dateBooking;
 
     public int getNumberOfGuests() {
         return numberOfGuests;
     }
-
-    // full constructor
-
     public void setNumberOfGuests(int numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
@@ -52,18 +69,18 @@ public class Booking {
         this.bookingPayed = bookingPayed;
     }
 
-    public long getBookingId() {
-        return bookingId;
+    public long getId() {
+        return id;
     }
-    public void setBookingId(long bookingId) {
-        this.bookingId = bookingId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Guest getHeadBooker() {
-        return this.headBooker;
+    public User getUser() {
+        return this.user;
     }
-    public void setHeadBooker(Guest headBooker) {
-        this.headBooker = headBooker;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getPrice() {
@@ -80,25 +97,25 @@ public class Booking {
         this.amountPayed = amountPayed;
     }
 
-    public Room[] getBookedRooms() {
+    public List<Room> getBookedRooms() {
         return this.bookedRooms;
     }
-    public void setBookedRooms(Room[] bookedRooms) {
+    public void setBookedRooms(List<Room> bookedRooms) {
         this.bookedRooms = bookedRooms;
     }
 
-    public Date getStartDate() {
-        return this.startDate;
+    public LocalDate getDateStart() {
+        return this.dateStart;
     }
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public Date getEndDate() {
-        return this.endDate;
+    public LocalDate getDateEnd() {
+        return this.dateEnd;
     }
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public EBookingStatus getBookingStatus() {
@@ -115,7 +132,14 @@ public class Booking {
         this.paymentMethod = paymentMethod;
     }
 
-    public Date getBookingDate() {
-        return this.bookingDate;
+    public LocalDateTime getDateBooking() {
+        return this.dateBooking;
+    }
+
+    public boolean isEmpty() {
+        if(this.getId() == 0) {
+            return true;
+        }
+        return false;
     }
 }

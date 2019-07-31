@@ -43,12 +43,13 @@ public class UserController {
      */
 
     @RequestMapping(method=RequestMethod.GET, value="/find/{id}")
-    public User findUserById(@RequestParam long id) {
+    public User findUserById(@PathVariable long id) {
+
         return userService.findById(id);
     }
 
     @RequestMapping(method=RequestMethod.GET, value="/find/{username}")
-    public User findUserByUsername(@RequestParam String username) {
+    public User findUserByUserName(@PathVariable String username) {
         return userService.findByUsername(username);
     }
 
@@ -57,9 +58,8 @@ public class UserController {
      * Deletes user accounts
      * @param id or user
      */
-
-    @RequestMapping(method = RequestMethod.DELETE, value="/delete")
-    public void deleteUserById(long id) {
+    @RequestMapping(method = RequestMethod.DELETE, value="/delete/{id}")
+    public void deleteUserById(@PathVariable long id) {
             userService.deleteUserById(id);
     }
 
@@ -74,7 +74,7 @@ public class UserController {
      * @param id
      */
 
-    @RequestMapping(method = RequestMethod.PUT, value="/resetpassword")
+    @RequestMapping(method = RequestMethod.PUT, value="/resetpassword", params = "id")
     public void resetPassword(@RequestParam long id) {
             userService.resetPassword(id);
     }

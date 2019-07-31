@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "org.hibernate.SQL",
+      "type": "java.lang.String",
+      "description": "Description for org.hibernate.SQL."
+    },
+    {
+      "name": "org.hibernate.type",
+      "type": "java.lang.String",
+      "description": "Description for org.hibernate.type."
+    },
+    {
+      "name": "org.hibernate.show_sql",
+      "type": "java.lang.String",
+      "description": "Description for org.hibernate.show_sql."
+    }
+  ] }
