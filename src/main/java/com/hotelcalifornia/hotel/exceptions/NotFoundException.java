@@ -1,5 +1,6 @@
 package com.hotelcalifornia.hotel.exceptions;
 
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -9,5 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException {
+    public NotFoundException() {
+        super();
+    }
+    public NotFoundException(String msg) {
+        super(msg);
+    }
 
 }

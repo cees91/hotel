@@ -3,21 +3,18 @@ package com.hotelcalifornia.hotel.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hotelcalifornia.hotel.Enums.EBedType;
 import com.hotelcalifornia.hotel.Enums.ERoomType;
-import org.apache.tomcat.jni.Local;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name="rooms")
-
+@Table(name = "rooms")
 public class Room {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int roomNumber;
     private int floor;
@@ -34,17 +31,26 @@ public class Room {
     private LocalDate endDate;
     private double price;
 
-    //default constructor for testing purposes
-    public Room() { }
-
-
     @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Booking> bookings;
 
 
+    //default constructor for testing purposes
+    public Room() {
+    }
+
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     public long getId() {
-    return id;
-}
+        return id;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -65,6 +71,7 @@ public class Room {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
     public int getRoomNumber() {
         return roomNumber;
     }

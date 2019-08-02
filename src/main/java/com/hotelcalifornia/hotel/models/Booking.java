@@ -2,6 +2,7 @@ package com.hotelcalifornia.hotel.models;
 
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -32,14 +33,17 @@ public class Booking {
 
     // the user that booked the room(s)
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private User user;
     @NotNull
     private int numberOfGuests;
     // list of rooms that are booked
     @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private List<Room> bookedRooms;
     // enum variables
     @Enumerated(EnumType.ORDINAL)
+    @ColumnDefault("0")
     private EBookingStatus bookingStatus;
     @Enumerated(EnumType.ORDINAL)
     private EPaymentMethod paymentMethod;
@@ -49,14 +53,13 @@ public class Booking {
     private LocalDateTime dateStart;
     @NotNull
     private LocalDateTime dateEnd;
-
     @NotNull
-    @ColumnDefault("NOW()")
     private LocalDateTime dateBooking;
 
     public int getNumberOfGuests() {
         return numberOfGuests;
     }
+
     public void setNumberOfGuests(int numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
@@ -64,6 +67,7 @@ public class Booking {
     public boolean isBookingPayed() {
         return this.bookingPayed;
     }
+
     public void setBookingPayed(boolean bookingPayed) {
         this.bookingPayed = bookingPayed;
     }
@@ -71,6 +75,7 @@ public class Booking {
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -78,6 +83,7 @@ public class Booking {
     public User getUser() {
         return this.user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -85,6 +91,7 @@ public class Booking {
     public double getPrice() {
         return this.price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -92,6 +99,7 @@ public class Booking {
     public double getAmountPayed() {
         return this.amountPayed;
     }
+
     public void setAmountPayed(double amountPayed) {
         this.amountPayed = amountPayed;
     }
@@ -99,6 +107,7 @@ public class Booking {
     public List<Room> getBookedRooms() {
         return this.bookedRooms;
     }
+
     public void setBookedRooms(List<Room> bookedRooms) {
         this.bookedRooms = bookedRooms;
     }
@@ -106,20 +115,23 @@ public class Booking {
     public @NotNull LocalDateTime getDateStart() {
         return this.dateStart;
     }
-    public void setDateStart(@NotNull LocalDateTime dateStart) {
+
+    public void setDateStart(LocalDateTime dateStart) {
         this.dateStart = dateStart;
     }
 
     public @NotNull LocalDateTime getDateEnd() {
         return this.dateEnd;
     }
-    public void setDateEnd(@NotNull LocalDateTime dateEnd) {
+
+    public void setDateEnd(LocalDateTime dateEnd) {
         this.dateEnd = dateEnd;
     }
 
     public EBookingStatus getBookingStatus() {
         return this.bookingStatus;
     }
+
     public void setBookingStatus(EBookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
     }
@@ -127,12 +139,17 @@ public class Booking {
     public EPaymentMethod getPaymentMethod() {
         return this.paymentMethod;
     }
+
     public void setPaymentMethod(EPaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
     public LocalDateTime getDateBooking() {
         return this.dateBooking;
+    }
+
+    public void setDateBooking(LocalDateTime dateBooking) {
+        this.dateBooking = dateBooking;
     }
 
     public boolean isEmpty() {

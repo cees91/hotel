@@ -9,19 +9,6 @@ public class Receptionist extends Employee {
 
     @Id
     private long id;
-    private Room[] availableRooms;
-    public Receptionist() {
-
-    }
-//    public Receptionist(User user) {
-//        super(user);
-//    }
-
-    public void getBookedRooms(){
-
-
-    }
-
 }
 
 

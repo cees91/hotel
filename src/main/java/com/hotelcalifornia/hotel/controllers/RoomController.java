@@ -2,19 +2,13 @@ package com.hotelcalifornia.hotel.controllers;
 
 import com.hotelcalifornia.hotel.exceptions.BadRequestException;
 import com.hotelcalifornia.hotel.models.Room;
-import com.hotelcalifornia.hotel.repository.RoomRepository;
 import com.hotelcalifornia.hotel.services.RoomService;
-import com.hotelcalifornia.hotel.utils.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController()

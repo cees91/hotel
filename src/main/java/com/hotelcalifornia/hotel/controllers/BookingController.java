@@ -29,9 +29,8 @@ public class BookingController {
      */
     @GetMapping(params = "bookingId")
     public Booking getBookingFromRepository(@RequestParam("bookingId") long id) throws RuntimeException {
-        System.out.println("get by id");
         try {
-            return bookingService.findBooking(id);
+            return bookingService.findBookingById(id);
         } catch (NotFoundException e) {
             throw e;
         }
@@ -44,15 +43,14 @@ public class BookingController {
      * @param userName the username of the headbooker
      * @return the {@link Booking} or null, returns a booking when successful, null when not
      */
-//    @GetMapping(params = "userName")
-//    public Booking getBookingFromRepository(@RequestParam("userName") String userName) throws RuntimeException {
-//        System.out.println("get by username");
-//        try {
-//            return bookingService.findBooking(userName);
-//        } catch (NotFoundException e) {
-//            throw e;
-//        }
-//    }
+    @GetMapping(params = "userName")
+    public Booking getBookingFromRepository(@RequestParam("userName") String userName) throws RuntimeException {
+        try {
+            return bookingService.findBookingByUserName(userName);
+        } catch (NotFoundException e) {
+            throw e;
+        }
+    }
 
     /**
      * searches for a booking in the registered list by first AND last name
@@ -61,16 +59,15 @@ public class BookingController {
      * @param lastName  the last name of the headbooker
      * @return the {@link Booking} or null, returns a booking when successful, null when not
      */
-//    @GetMapping(params = {"firstName", "lastName"})
-//    public Booking getBookingFromRepository(@RequestParam("firstName") String firstName,
-//                                            @RequestParam("lastName") String lastName) throws RuntimeException {
-//        System.out.println("get by full name");
-//        try {
-//            return bookingService.findBooking(firstName, lastName);
-//        } catch (NotFoundException e) {
-//            throw e;
-//        }
-//    }
+    @GetMapping(params = {"firstName", "lastName"})
+    public Booking getBookingFromRepository(@RequestParam("firstName") String firstName,
+                                            @RequestParam("lastName") String lastName) throws RuntimeException {
+        try {
+            return bookingService.findBookingByFirstAndLastName(firstName, lastName);
+        } catch (NotFoundException e) {
+            throw e;
+        }
+    }
 
     /**
      * Get the entire list of bookings currently registered in the repository
@@ -80,7 +77,6 @@ public class BookingController {
      */
     @GetMapping
     public List<Booking> getAllBookings() throws RuntimeException {
-        System.out.println("empty get");
         try {
             return bookingService.getBookings();
         } catch (EmptyRepoException e) {
@@ -92,11 +88,22 @@ public class BookingController {
      * create and add a new booking to the booking repository
      *
      * @param booking a booking object, for POST calls, use JSON to create a valid booking object.
+     *                also, give this JSON a child in the form of a user, give that user an id, and it should find the correct user.
+     * example:
+     * {
+     * 	"numberOfGuests" : 5,
+     * 	"dateStart" : "2019-08-03T08:00:00",
+     * 	"dateEnd" : "2019-08-10T21:00:00",
+     * 	"dateBooking": "2019-08-02T16:00:00",
+     *     "user": {
+     *         "id" : 1
+     *     }
+     * }
      * TODO: create something that checks the validity of the booking object and returns if you are allowed to create an object or not
      */
     @PostMapping
     public void saveBooking(@RequestBody Booking booking) {
-        bookingService.create(booking);
+        bookingService.saveNewBooking(booking);
     }
 
     /**
@@ -105,10 +112,10 @@ public class BookingController {
      * @param id      the id of the booking to overwrite
      * @param booking an automatically constructed booking object from the provided JSON body
      */
-    @PatchMapping(params = "bookingId")
-    public void patchBooking(@RequestParam("bookingId") long id, @RequestBody Booking booking) throws RuntimeException {
+    @PatchMapping
+    public void patchBooking(@RequestBody Booking booking) throws RuntimeException {
         try {
-            bookingService.findAndUpdate(id, booking);
+            bookingService.update(booking);
         } catch (NotFoundException e) {
             throw e;
         }
@@ -123,7 +130,7 @@ public class BookingController {
     @DeleteMapping(params = "bookingId")
     public void deleteBooking(@RequestParam("bookingId") long id) throws RuntimeException {
         try {
-            bookingService.deleteBooking(id);
+            bookingService.deleteBookingById(id);
         } catch (NotFoundException e) {
             throw e;
         }

@@ -1,8 +1,11 @@
 package com.hotelcalifornia.hotel.controllers;
 
+import com.hotelcalifornia.hotel.exceptions.NotFoundException;
+import com.hotelcalifornia.hotel.models.Booking;
 import com.hotelcalifornia.hotel.models.Employee;
 import com.hotelcalifornia.hotel.models.Guest;
 import com.hotelcalifornia.hotel.models.User;
+import com.hotelcalifornia.hotel.services.BookingService;
 import com.hotelcalifornia.hotel.services.EmployeeService;
 import com.hotelcalifornia.hotel.services.GuestService;
 import com.hotelcalifornia.hotel.services.UserService;
@@ -28,6 +31,9 @@ public class UserController {
     @Autowired
     private GuestService guestService;
 
+    @Autowired
+    private BookingService bookingService;
+
 
     ArrayList<User> users = new ArrayList<>();
 
@@ -42,28 +48,32 @@ public class UserController {
      * @param id or username
      */
 
-    @RequestMapping(method=RequestMethod.GET, value="/find/{id}")
+    @GetMapping( value="/find/{id}")
     public User findUserById(@PathVariable long id) {
-
         return userService.findById(id);
     }
 
-    @RequestMapping(method=RequestMethod.GET, value="/find/{username}")
+    @GetMapping( value="/find/{username}")
     public User findUserByUserName(@PathVariable String username) {
         return userService.findByUsername(username);
     }
 
+    @GetMapping( value="/find/all-bookings/{id}")
+    public List<Booking> findBookingsForUser(@PathVariable long id) throws NotFoundException {
+        return bookingService.getAllbookingsForAGuest(userService.findById(id));
+    }
 
     /**
      * Deletes user accounts
      * @param id or user
      */
-    @RequestMapping(method = RequestMethod.DELETE, value="/delete/{id}")
+
+    @DeleteMapping(value="/delete/{id}")
     public void deleteUserById(@PathVariable long id) {
             userService.deleteUserById(id);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="/delete")
+    @DeleteMapping( value="/delete")
     public void deleteUser(User user) {
         userService.deleteUser(user);
     }
@@ -74,7 +84,7 @@ public class UserController {
      * @param id
      */
 
-    @RequestMapping(method = RequestMethod.PUT, value="/resetpassword", params = "id")
+    @PutMapping(value="/resetpassword", params = "id")
     public void resetPassword(@RequestParam long id) {
             userService.resetPassword(id);
     }
@@ -84,19 +94,19 @@ public class UserController {
      * @param user, guest, employee
      */
 
-    @RequestMapping(method = RequestMethod.POST, value="/create")
+    @PostMapping( value="/create")
     //create user account
     public void create(@RequestBody User user){
         userService.addUser(user);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/create/guest")
+    @PostMapping(value="/create/guest")
     //create user account
     public void create(@RequestBody Guest guest){
         guestService.addGuest(guest);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/create/employee")
+    @PostMapping( value="/create/employee")
     //create user account
     public void create(@RequestBody Employee employee){
         employeeService.addEmployee(employee);
@@ -126,17 +136,17 @@ public class UserController {
      *
      */
 
-    @RequestMapping(method = RequestMethod.GET, value="/allguests")
+    @GetMapping( value="/allguests")
     public List<Guest> getAllGuests() {
         return guestService.getAll();
     }
 
-    @RequestMapping(value = "/getall", method = RequestMethod.GET)
+    @GetMapping(value = "/getall")
     public List<User> getAll(){
         return userService.getAll();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/allemployees")
+    @GetMapping(value="/allemployees")
     public List<Employee> getAllEmployees() {
         return employeeService.getAll();
     }

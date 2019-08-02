@@ -1,15 +1,21 @@
 package com.hotelcalifornia.hotel.models;
 
-import com.hotelcalifornia.hotel.Enums.EUserType;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
+/**
+ * with this Inheritance tag the table should add a column that saves
+ * what class this entity is, so for example, a Guest would have "Guest" in that column
+ */
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="Users")
 public class User {
@@ -18,20 +24,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.PROPERTY)
     private long id;
-
+    @NotNull
     private String userName;
+    @NotNull
     private String password;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
 
-    @Enumerated(EnumType.ORDINAL)
-    private EUserType userType;
     @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Booking> bookingsOfUser;
-
-    public User() {
-
-    }
 
     public List<Booking> getBookingsOfUser() {
         return bookingsOfUser;
@@ -39,7 +43,6 @@ public class User {
 
     public void setBookingsOfUser(List<Booking> bookingsOfUser) {
         this.bookingsOfUser = bookingsOfUser;
-
     }
 
     public String getUserName() {
@@ -64,15 +67,6 @@ public class User {
 
     public void setId(long id){
         this.id = id;
-
-    }
-
-    public EUserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(EUserType userType) {
-        this.userType = userType;
     }
 
     public String getFirstName() {
