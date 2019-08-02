@@ -1,4 +1,4 @@
-package com.hotelcalifornia.hotel.service;
+package com.hotelcalifornia.hotel.services;
 
 import com.hotelcalifornia.hotel.exceptions.EmptyRepoException;
 import com.hotelcalifornia.hotel.exceptions.NotFoundException;

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
+
     @Autowired
     private RoomRepository repo;
 

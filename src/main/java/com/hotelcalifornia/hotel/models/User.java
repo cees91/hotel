@@ -25,7 +25,7 @@ public class User {
     private String lastName;
 
     @Enumerated(EnumType.ORDINAL)
-    private EUserType type;
+    private EUserType userType;
     @OneToMany
     private List<Booking> bookingsOfUser;
 
@@ -67,12 +67,12 @@ public class User {
 
     }
 
-    public EUserType getType() {
-        return type;
+    public EUserType getUserType() {
+        return userType;
     }
 
-    public void setType(EUserType type) {
-        this.type = type;
+    public void setUserType(EUserType userType) {
+        this.userType = userType;
     }
 
     public String getFirstName() {

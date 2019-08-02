@@ -6,7 +6,6 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -47,9 +46,9 @@ public class Booking {
 
     // dates
     @NotNull
-    private LocalDate dateStart;
+    private LocalDateTime dateStart;
     @NotNull
-    private LocalDate dateEnd;
+    private LocalDateTime dateEnd;
 
     @NotNull
     @ColumnDefault("NOW()")
@@ -104,17 +103,17 @@ public class Booking {
         this.bookedRooms = bookedRooms;
     }
 
-    public LocalDate getDateStart() {
+    public @NotNull LocalDateTime getDateStart() {
         return this.dateStart;
     }
-    public void setDateStart(LocalDate dateStart) {
+    public void setDateStart(@NotNull LocalDateTime dateStart) {
         this.dateStart = dateStart;
     }
 
-    public LocalDate getDateEnd() {
+    public @NotNull LocalDateTime getDateEnd() {
         return this.dateEnd;
     }
-    public void setDateEnd(LocalDate dateEnd) {
+    public void setDateEnd(@NotNull LocalDateTime dateEnd) {
         this.dateEnd = dateEnd;
     }
 
