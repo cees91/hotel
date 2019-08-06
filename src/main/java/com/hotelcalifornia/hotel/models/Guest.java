@@ -19,7 +19,8 @@ public class Guest extends User {
     public Guest() {
     }
 
-    public Guest(User user, String firstName, String lastName, String phoneNumber, String address, String houseNumber, String postcode, String city, String country, String emailAddress) {
+    public Guest(User user, String firstName, String lastName, String phoneNumber, String address,
+                 String houseNumber, String postcode, String city, String country, String emailAddress) {
         this.setUserName(user.getUserName());
         this.setPassword(user.getPassword());
         this.setType(EUserType.Guest);

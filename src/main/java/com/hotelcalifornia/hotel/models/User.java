@@ -1,6 +1,7 @@
 package com.hotelcalifornia.hotel.models;
 
 import com.hotelcalifornia.hotel.Enums.EUserType;
+
 import javax.persistence.*;
 
 
@@ -39,7 +40,7 @@ public class User {
     }
 
     public void setId(long id){
-        this.Id = Id;
+        this.Id = id;
     }
 
     public long getId() {
