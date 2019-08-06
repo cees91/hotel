@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Bookings")
-public class Booking {
+public class    Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +47,9 @@ public class Booking {
 
     // dates
     @NotNull
-    private LocalDate dateStart;
+    private LocalDate startDate;
     @NotNull
-    private LocalDate dateEnd;
+    private LocalDate endDate;
 
     @NotNull
     @ColumnDefault("NOW()")
@@ -73,7 +73,7 @@ public class Booking {
         return id;
     }
     public void setId(long id) {
-        this.id = id;
+            this.id = id;
     }
 
     public User getUser() {
@@ -105,17 +105,17 @@ public class Booking {
     }
 
     public LocalDate getDateStart() {
-        return this.dateStart;
+        return this.startDate;
     }
     public void setDateStart(LocalDate dateStart) {
-        this.dateStart = dateStart;
+        this.startDate = dateStart;
     }
 
     public LocalDate getDateEnd() {
-        return this.dateEnd;
+        return this.endDate;
     }
     public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
+        this.endDate = dateEnd;
     }
 
     public EBookingStatus getBookingStatus() {

@@ -27,7 +27,7 @@ public class RoomController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public void addrooms(@RequestBody List<Room> rooms){
-        service.addRooms(rooms);
+         service.addRooms(rooms);
     }
     @RequestMapping(value = "/id", method = RequestMethod.GET, params = "roomID")
     public Room getRoomByID(@RequestParam("roomID") int id) {
