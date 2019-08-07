@@ -1,5 +1,6 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
 import org.hibernate.annotations.ColumnDefault;
@@ -32,7 +33,7 @@ public class    Booking {
     private double amountPayed;
 
     // the user that booked the room(s)
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private User user;
     @NotNull
     private int numberOfGuests;
@@ -47,13 +48,15 @@ public class    Booking {
 
     // dates
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
+
     private LocalDate startDate;
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate endDate;
 
     @NotNull
-    @ColumnDefault("NOW()")
-    private LocalDateTime dateBooking;
+    private LocalDateTime dateBooking = LocalDateTime.now();
 
     public int getNumberOfGuests() {
         return numberOfGuests;
@@ -77,7 +80,7 @@ public class    Booking {
     }
 
     public User getUser() {
-        return this.user;
+        return this.    user;
     }
     public void setUser(User user) {
         this.user = user;

@@ -96,6 +96,7 @@ public class BookingController {
      */
     @PostMapping
     public void saveBooking(@RequestBody Booking booking) {
+
         bookingService.create(booking);
     }
 
