@@ -82,8 +82,7 @@ public class RoomService {
     }
 
     private boolean checkDates(Room currentRoom, int numberOfAdults, LocalDate startDate, LocalDate endDate) {
-        if (currentRoom.getAdults() >= numberOfAdults
-                && (currentRoom.getStartDate() == null && currentRoom.getEndDate() == null
+        if ((currentRoom.getStartDate() == null && currentRoom.getEndDate() == null
                 || (currentRoom.getStartDate().isAfter(startDate) && currentRoom.getStartDate().isAfter(endDate))
                 || (currentRoom.getEndDate().isBefore(startDate) && currentRoom.getEndDate().isBefore(endDate)))) {
             return true;

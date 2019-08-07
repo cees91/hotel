@@ -128,7 +128,7 @@ public class BookingService {
     }
 
     public void create(Booking booking) {
-        bookingRepository.findAll().add(booking);
+        bookingRepository.save(booking);
     }
 
     public void update(Booking booking) throws RuntimeException {

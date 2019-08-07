@@ -1,5 +1,6 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hotelcalifornia.hotel.Enums.EBookingStatus;
 import com.hotelcalifornia.hotel.Enums.EPaymentMethod;
 import org.hibernate.annotations.ColumnDefault;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Bookings")
-public class Booking {
+public class    Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Booking {
     private double amountPayed;
 
     // the user that booked the room(s)
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private User user;
     @NotNull
     private int numberOfGuests;
@@ -47,13 +48,15 @@ public class Booking {
 
     // dates
     @NotNull
-    private LocalDate dateStart;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+
+    private LocalDate startDate;
     @NotNull
-    private LocalDate dateEnd;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate endDate;
 
     @NotNull
-    @ColumnDefault("NOW()")
-    private LocalDateTime dateBooking;
+    private LocalDateTime dateBooking = LocalDateTime.now();
 
     public int getNumberOfGuests() {
         return numberOfGuests;
@@ -73,11 +76,11 @@ public class Booking {
         return id;
     }
     public void setId(long id) {
-        this.id = id;
+            this.id = id;
     }
 
     public User getUser() {
-        return this.user;
+        return this.    user;
     }
     public void setUser(User user) {
         this.user = user;
@@ -105,17 +108,17 @@ public class Booking {
     }
 
     public LocalDate getDateStart() {
-        return this.dateStart;
+        return this.startDate;
     }
     public void setDateStart(LocalDate dateStart) {
-        this.dateStart = dateStart;
+        this.startDate = dateStart;
     }
 
     public LocalDate getDateEnd() {
-        return this.dateEnd;
+        return this.endDate;
     }
     public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
+        this.endDate = dateEnd;
     }
 
     public EBookingStatus getBookingStatus() {
