@@ -65,7 +65,7 @@ floor;type;adults;children;bedType;isDisabled
 4;Single;1;1;Single ;FALSE
 4;Single ;1;0;Single ;TRUE
 4;Single ;1;0;Single ;TRUE
-4;Double ;2;0;DoubleBed ;FALSE
+4;Double ;2;0;DoubleBed ;TRUE
 4;Double ;2;0;DoubleBed ;FALSE
 4;Double ;2;0;DoubleBed ;FALSE
 4;Double ;2;0;TwoSingle;FALSE
