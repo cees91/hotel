@@ -23,8 +23,9 @@ public class User {
 
     private String userName;
 
+
     private String password;
-    private String passwordCheck;
+    //private String passwordCheck;
     private String firstName;
     private String lastName;
 

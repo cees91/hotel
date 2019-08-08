@@ -15,19 +15,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean login(String email, String password){
-        User user = userRepository.findByEmailAddress(email);
-        if(user != null){
-            String passwordOfUser = user.getPassword();
-            if(password.equals(passwordOfUser)){
-                return true;
-            } else {
-                return false;
-            }
-        } else{
-            throw new NotFoundException("No user with was found with the specified email");
-        }
-    }
+
     public User findByUsername(String username){
         return userRepository.findByUserName(username);
     }
