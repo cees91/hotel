@@ -1,5 +1,6 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hotelcalifornia.hotel.Enums.EUserType;
 import org.springframework.context.annotation.Bean;
 
