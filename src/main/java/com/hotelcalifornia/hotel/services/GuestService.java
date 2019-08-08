@@ -14,13 +14,17 @@ import java.util.List;
 public class GuestService {
 
     @Autowired
-    GuestRepository guestRepository;
+    private GuestRepository guestRepository;
 
-    public boolean login(String email, String password){
-        User user = guestRepository.findByEmailAddress(email);
+
+    public Guest getUser(String email, String password){
+        return guestRepository.findByEmailAddress(email);
+    }
+    public boolean checkCredentials(User user){
+        String password = user.getPassword();
         if(user != null){
             String passwordOfUser = user.getPassword();
-            if(password.equals(passwordOfUser)){
+            if(password.equals(BCrypt.hashpw(passwordOfUser, BCrypt.gensalt()))){
                 return true;
             } else {
                 return false;
@@ -29,6 +33,7 @@ public class GuestService {
             throw new NotFoundException("No user with was found with the specified email");
         }
     }
+
 
     public void addGuest(Guest g){
         g.setPassword(BCrypt.hashpw(g.getPassword(), BCrypt.gensalt()));
