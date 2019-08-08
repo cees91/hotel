@@ -24,7 +24,7 @@ public class GuestService {
         String password = user.getPassword();
         if(user != null){
             String passwordOfUser = user.getPassword();
-            if(password.equals(passwordOfUser)){
+            if(password.equals(BCrypt.hashpw(passwordOfUser, BCrypt.gensalt()))){
                 return true;
             } else {
                 return false;
