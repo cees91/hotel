@@ -18,7 +18,7 @@ import java.util.Set;
 public class Room {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int roomNumber;
     private int floor;
@@ -39,7 +39,8 @@ public class Room {
     public Room() { }
 
 
-    @ManyToMany
+
+    @ManyToMany(mappedBy = "bookedRooms")
     private List<Booking> bookings;
 
 

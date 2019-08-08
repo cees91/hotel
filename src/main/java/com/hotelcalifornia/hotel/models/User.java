@@ -1,6 +1,8 @@
 package com.hotelcalifornia.hotel.models;
 
 import com.hotelcalifornia.hotel.Enums.EUserType;
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.*;
 
 import javax.persistence.Entity;
@@ -20,6 +22,7 @@ public class User {
     private long id;
 
     private String userName;
+
     private String password;
     private String passwordCheck;
     private String firstName;

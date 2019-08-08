@@ -1,4 +1,4 @@
-package com.hotelcalifornia.hotel.service;
+package com.hotelcalifornia.hotel.services;
 
 import com.hotelcalifornia.hotel.exceptions.EmptyRepoException;
 import com.hotelcalifornia.hotel.exceptions.NotFoundException;
@@ -127,8 +127,9 @@ public class BookingService {
         return foundBookings;
     }
 
-    public void create(Booking booking) {
-        bookingRepository.findAll().add(booking);
+    public void create(Booking booking)
+    {
+        bookingRepository.save(booking);
     }
 
     public void update(Booking booking) throws RuntimeException {

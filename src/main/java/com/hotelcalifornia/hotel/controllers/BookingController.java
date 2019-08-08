@@ -4,7 +4,7 @@ package com.hotelcalifornia.hotel.controllers;
 import com.hotelcalifornia.hotel.exceptions.EmptyRepoException;
 import com.hotelcalifornia.hotel.exceptions.NotFoundException;
 import com.hotelcalifornia.hotel.models.Booking;
-import com.hotelcalifornia.hotel.service.BookingService;
+import com.hotelcalifornia.hotel.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,6 +96,7 @@ public class BookingController {
      */
     @PostMapping
     public void saveBooking(@RequestBody Booking booking) {
+
         bookingService.create(booking);
     }
 

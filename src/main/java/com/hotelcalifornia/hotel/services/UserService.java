@@ -1,5 +1,6 @@
 package com.hotelcalifornia.hotel.services;
 
+import com.hotelcalifornia.hotel.exceptions.NotFoundException;
 import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,25 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public boolean login(String email, String password){
+        User user = userRepository.findByEmailAddress(email);
+        if(user != null){
+            String passwordOfUser = user.getPassword();
+            if(password.equals(passwordOfUser)){
+                return true;
+            } else {
+                return false;
+            }
+        } else{
+            throw new NotFoundException("No user with was found with the specified email");
+        }
+    }
     public User findByUsername(String username){
         return userRepository.findByUserName(username);
     }
-
     public User findById(long id){
         return userRepository.findById(id);
     }
-
     public void addUser(User u){userRepository.save(u);}
 
     public void deleteUser(User u) {

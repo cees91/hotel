@@ -18,7 +18,7 @@ public class RoomService {
     @Autowired
     private RoomRepository repo;
 
-    private Room filterRooms(int roomNumber) {
+    private Room filterRooms(long roomNumber) {
         Room room = null;
         for (Room currentRoom : repo.findAll()) {
             if (currentRoom.getRoomNumber() == (roomNumber)) {
@@ -37,13 +37,17 @@ public class RoomService {
         repo.saveAll(rooms);
     }
 
+    public void addRoom(Room room) {
+        repo.save(room);
+    }
+
     public List<Room> getAvailableRooms() {
         List<Room> availableRooms = repo.findAll().stream().filter(room -> room.isAvailable()).collect(Collectors.toList());
         ;
         return availableRooms;
     }
 
-    public Room findRoom(int roomNumber) throws Exception {
+    public Room findRoom(long roomNumber) throws Exception {
         Room room = filterRooms(roomNumber);
         if (room != null) {
             return room;
@@ -82,8 +86,7 @@ public class RoomService {
     }
 
     private boolean checkDates(Room currentRoom, int numberOfAdults, LocalDate startDate, LocalDate endDate) {
-        if (currentRoom.getAdults() >= numberOfAdults
-                && (currentRoom.getStartDate() == null && currentRoom.getEndDate() == null
+        if ((currentRoom.getStartDate() == null && currentRoom.getEndDate() == null
                 || (currentRoom.getStartDate().isAfter(startDate) && currentRoom.getStartDate().isAfter(endDate))
                 || (currentRoom.getEndDate().isBefore(startDate) && currentRoom.getEndDate().isBefore(endDate)))) {
             return true;

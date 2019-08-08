@@ -27,10 +27,15 @@ public class RoomController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public void addrooms(@RequestBody List<Room> rooms){
-        service.addRooms(rooms);
+         service.addRooms(rooms);
     }
-    @RequestMapping(value = "/id", method = RequestMethod.GET, params = "roomID")
-    public Room getRoomByID(@RequestParam("roomID") int id) {
+
+    @RequestMapping(value = "", method = RequestMethod.DELETE, params = "roomId")
+    public void deleteRoom(@RequestParam("roomId") long id) {
+    }
+
+    @RequestMapping(value = "/id", method = RequestMethod.GET, params = "roomId")
+    public Room getRoomByID(@RequestParam("roomId") long id) {
         Room room = null;
         try {
             room = service.findRoom(id);
@@ -39,10 +44,12 @@ public class RoomController {
         }
         return room;
     }
+
     @RequestMapping(value = "/bookroom", method = RequestMethod.POST)
     public void bookRoom(@RequestBody Room room ){
         service.bookRoom(room);
     }
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ArrayList<Room> getAllRooms() {
         ArrayList<Room> rooms = null;
@@ -53,11 +60,15 @@ public class RoomController {
         }
         return rooms;
     }
+
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public ArrayList<Room> editRooms(@RequestBody ArrayList<Room> rooms){
         service.addRooms(rooms);
         return rooms;
     }
+
+
+
     @RequestMapping(value = "/findrooms", method = RequestMethod.GET)
     public ArrayList<Room> findRooms(@RequestParam("adults") int adults, @RequestParam("startDate") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate startDate, @RequestParam("endDate") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate endDate) {
         ArrayList<Room> rooms;
