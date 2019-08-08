@@ -4,6 +4,7 @@ import com.hotelcalifornia.hotel.exceptions.NotFoundException;
 import com.hotelcalifornia.hotel.models.Guest;
 import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.repository.GuestRepository;
+import com.hotelcalifornia.hotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,11 @@ import java.util.List;
 public class GuestService {
 
     @Autowired
-    private GuestRepository guestRepository;
+    private UserRepository userRepository;
 
 
-    public Guest getUser(String email, String password){
-        return guestRepository.findByEmailAddress(email);
+    public User getUser(String email, String password){
+        return userRepository.findByEmailAddress(email);
     }
     public boolean checkCredentials(User user,String password){
         if(user != null){
@@ -36,13 +37,13 @@ public class GuestService {
 
     public void addGuest(Guest g){
         g.setPassword(BCrypt.hashpw(g.getPassword(), BCrypt.gensalt()));
-        guestRepository.save(g);}
+        userRepository.save(g);}
 
     public void updateGuest(Guest guest){
-        guestRepository.save(guest);
+        userRepository.save(guest);
     }
 
-    public List<Guest> getAll(){
-        return guestRepository.findAll();
+    public List<User> getAll(){
+        return userRepository.findAll();
     }
 }

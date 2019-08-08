@@ -24,16 +24,17 @@ public class SessionService {
     public User getUser(UUID uuid){
         User user =null;
         try {
-            user = repo.findByUuid(uuid).getUser();
+            Session sessions = repo.findByUuid(uuid);
+            user = sessions.getUser();
         } catch(Exception ex){
             System.out.println(ex + ex.getMessage());
         }
-        System.out.println("lalala");
         return user;
     }
     public void deleteSession(UUID uuid){
         Session session = repo.findByUuid(uuid);
         repo.deleteById(session.getId());
     }
-    public Session findByEmail(String email){ return repo.findByEmail(email);}
+    public Session findByEmail(String email){
+        return repo.findByEmail(email);}
 }
