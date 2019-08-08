@@ -1,36 +1,26 @@
-package com.hotelcalifornia.hotel.controllers;
-
-import com.hotelcalifornia.hotel.models.User;
-
-import java.util.Scanner;
-
-public class Login {
-
-    public Login() {
-    }
-
-    Scanner scanner = new Scanner(System.in);
-
-    public void Login(User user) {
-
-        boolean login = true;
-        String usedUsername = user.getUserName();
-        String usedPassword = user.getPassword();
-
-        do {
-            System.out.println("Enter your username: ");
-            String inputUsername = scanner.next();
-            System.out.println("Enter your password: ");
-            String inputPassword = scanner.next();
-
-
-            if (usedUsername.equals(inputUsername) && usedPassword.equals(inputPassword)) {
-                System.out.println("You are logged in to your account.");
-                login = false;
-            } else {
-                System.out.println("These credentials are not correct, please try again.");
-            }
-
-        } while (login);
-    }
-}
+//package com.hotelcalifornia.hotel.controllers;
+//
+//import com.hotelcalifornia.hotel.models.User;
+//import com.hotelcalifornia.hotel.services.UserService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import java.util.Scanner;
+//@RestController
+//@RequestMapping
+//public class Login {
+////    @Autowired
+////    private SessionService session;
+//    @Autowired
+//    private UserService service;
+//    @GetMapping
+//    public boolean login(String email, String password) throws RuntimeException{
+//        boolean hasCorrectCredentials = service.login(email,password);
+//        if(hasCorrectCredentials){
+////            session.add()
+//        }
+//        return true;
+//    }
+//}

@@ -127,7 +127,8 @@ public class BookingService {
         return foundBookings;
     }
 
-    public void create(Booking booking) {
+    public void create(Booking booking)
+    {
         bookingRepository.save(booking);
     }
 

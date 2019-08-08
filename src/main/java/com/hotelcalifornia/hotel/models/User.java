@@ -23,7 +23,9 @@ public class User {
 
     private String userName;
 
+
     private String password;
+    //private String passwordCheck;
     private String firstName;
     private String lastName;
 
@@ -32,9 +34,6 @@ public class User {
     @OneToMany
     private List<Booking> bookingsOfUser;
 
-    public User() {
-
-    }
 
     public List<Booking> getBookingsOfUser() {
         return bookingsOfUser;
