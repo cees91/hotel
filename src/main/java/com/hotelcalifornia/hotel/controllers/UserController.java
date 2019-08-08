@@ -127,8 +127,8 @@ public class UserController {
      */
 
     @RequestMapping(method = RequestMethod.GET, value="/allguests")
-    public List<Guest> getAllGuests() {
-        return guestService.getAll();
+    public List<User> getAllGuests() {
+        return userService.getAll();
     }
 
     @RequestMapping(value = "/getall", method = RequestMethod.GET)

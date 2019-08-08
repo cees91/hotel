@@ -33,7 +33,7 @@ public class    Booking {
     private double amountPayed;
 
     // the user that booked the room(s)
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private User user;
     @NotNull
     private int numberOfGuests;

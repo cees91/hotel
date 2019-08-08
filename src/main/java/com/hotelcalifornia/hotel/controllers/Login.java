@@ -23,10 +23,10 @@ public class Login {
     @Autowired
     private GuestService service;
     @PostMapping
-    public UUID login(@RequestBody Guest guest) throws RuntimeException{
-        String email = guest.getEmailAddress();
-        String password = guest.getPassword();
-        Guest user = service.getUser(email, password);
+    public UUID login(@RequestBody User userParam) throws RuntimeException{
+        String email = userParam.getEmailAddress();
+        String password = userParam.getPassword();
+        User user = service.getUser(email, password);
         boolean hasCorrectCredentials = service.checkCredentials(user, password);
         if(hasCorrectCredentials){
             Session session = sessionService.findByEmail(email);
@@ -45,6 +45,7 @@ public class Login {
     }
     @GetMapping
     public User getUser(@RequestParam UUID uuid){
+
         return sessionService.getUser(uuid);
     }
     @DeleteMapping

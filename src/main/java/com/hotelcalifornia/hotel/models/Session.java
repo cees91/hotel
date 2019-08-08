@@ -1,5 +1,7 @@
 package com.hotelcalifornia.hotel.models;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -25,6 +27,8 @@ public class Session {
     }
 
     @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     private User user;
 
     @Column(name = "uuid")
