@@ -1,4 +1,5 @@
-package com.hotelcalifornia.hotel.controllers;
+
+        package com.hotelcalifornia.hotel.controllers;
 
 import com.hotelcalifornia.hotel.exceptions.NotAllowedException;
 import com.hotelcalifornia.hotel.models.Guest;
@@ -38,3 +39,4 @@ public class Login {
         sessionService.deleteSession(id);
     }
 }
+

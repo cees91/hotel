@@ -5,6 +5,7 @@ import com.hotelcalifornia.hotel.models.Guest;
 import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +33,11 @@ public class GuestService {
             throw new NotFoundException("No user with was found with the specified email");
         }
     }
-    public void addGuest(Guest g){guestRepository.save(g);}
+
+
+    public void addGuest(Guest g){
+        g.setPassword(BCrypt.hashpw(g.getPassword(), BCrypt.gensalt()));
+        guestRepository.save(g);}
 
     public void updateGuest(Guest guest){
         guestRepository.save(guest);
