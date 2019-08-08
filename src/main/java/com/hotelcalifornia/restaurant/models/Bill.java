@@ -1,23 +1,38 @@
 package com.hotelcalifornia.restaurant.models;
 
+import org.hibernate.annotations.CollectionType;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.List;
 
+/**
+ * This POJO Bill class contains information about the costs for food and drink, as well as a list of what was
+ * ordered
+ */
+@Entity
 public class Bill {
-
-    private int billId;
+    @Id
+    @GeneratedValue
+    private long id;
     private float foodAmt;
     private float drinkAmt;
     private float taxRate;
     private float grandTotal;
+
+    @ElementCollection
     private List<Food> foods;
+    @ElementCollection
     private List<Drink> drinks;
 
-    public int getBillId() {
-        return billId;
+    public long getid() {
+        return id;
     }
 
-    public void setBillId(int billId) {
-        this.billId = billId;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public float getFoodAmt() {
