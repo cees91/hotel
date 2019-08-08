@@ -1,8 +1,6 @@
 package com.hotelcalifornia.hotel.models;
 
 
-import com.hotelcalifornia.hotel.Enums.EUserType;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -12,14 +10,36 @@ public class Employee extends User {
     @Id
     private long id;
 
-    public Employee(){}
+    public String getAuthType() {
+        return authType;
+    }
 
-//    public Employee(User user) {
-//        this.setUserName(user.getUserName());
-//        this.setPassword(user.getPassword());
-//        this.setType(EUserType.Employee);
-//        this.setId(user.getId());
-//    }
+    public void setAuthType(String authType) {
+        this.authType = authType;
+    }
+
+    private String authType = "admin";
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    private String emailAddress;
+
+
 
 
 }

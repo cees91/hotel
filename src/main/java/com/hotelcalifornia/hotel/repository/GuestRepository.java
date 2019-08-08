@@ -1,6 +1,7 @@
 package com.hotelcalifornia.hotel.repository;
 
 import com.hotelcalifornia.hotel.models.Guest;
+import com.hotelcalifornia.hotel.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
     Guest findById(long id);
     Guest findByUserName(String username);
     Guest findByLastName(String lastName);
+    Guest findByEmailAddress(String email);
+
 }

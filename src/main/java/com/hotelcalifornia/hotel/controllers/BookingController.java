@@ -28,7 +28,7 @@ public class BookingController {
      * @throws NotFoundException
      */
     @GetMapping(params = "bookingId")
-    public Booking getBookingFromRepository(@RequestParam("bookingId") long id) throws RuntimeException {
+    public List<Booking> getBookingFromRepository(@RequestParam("bookingId") long id) throws RuntimeException {
         System.out.println("get by id");
         try {
             return bookingService.findBooking(id);
@@ -80,7 +80,6 @@ public class BookingController {
      */
     @GetMapping
     public List<Booking> getAllBookings() throws RuntimeException {
-        System.out.println("empty get");
         try {
             return bookingService.getBookings();
         } catch (EmptyRepoException e) {
@@ -104,16 +103,16 @@ public class BookingController {
      * overwrite the booking that has the given id, with a new booking object constructed from the JSON body the PATCH call should provide
      *
      * @param id      the id of the booking to overwrite
-     * @param booking an automatically constructed booking object from the provided JSON body
+     * @param bookin    g an automatically constructed booking object from the provided JSON body
      */
-    @PatchMapping(params = "bookingId")
-    public void patchBooking(@RequestParam("bookingId") long id, @RequestBody Booking booking) throws RuntimeException {
-        try {
-            bookingService.findAndUpdate(id, booking);
-        } catch (NotFoundException e) {
-            throw e;
-        }
-    }
+//    @PatchMapping(params = "bookingId")
+//    public void patchBooking(@RequestParam("bookingId") long id, @RequestBody Booking booking) throws RuntimeException {
+//        try {
+//            bookingService.findAndUpdate(id, booking);
+//        } catch (NotFoundException e) {
+//            throw e;
+//        }
+//    }
 
     /**
      * remove a booking from the booking repository

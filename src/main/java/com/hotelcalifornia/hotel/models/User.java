@@ -1,5 +1,6 @@
 package com.hotelcalifornia.hotel.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hotelcalifornia.hotel.Enums.EUserType;
 import org.springframework.context.annotation.Bean;
 
@@ -23,18 +24,23 @@ public class User {
 
     private String userName;
 
+
     private String password;
+    //private String passwordCheck;
     private String firstName;
     private String lastName;
 
-    @Enumerated(EnumType.ORDINAL)
-    private EUserType type;
+
+
+    private String emailAddress;
+
+
+
+    @Enumerated(EnumType.STRING)
+    private EUserType userType;
     @OneToMany
     private List<Booking> bookingsOfUser;
 
-    public User() {
-
-    }
 
     public List<Booking> getBookingsOfUser() {
         return bookingsOfUser;
@@ -44,7 +50,20 @@ public class User {
         this.bookingsOfUser = bookingsOfUser;
 
     }
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+    public EUserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(EUserType userType) {
+        this.userType = userType;
+    }
     public String getUserName() {
         return this.userName;
     }
@@ -70,13 +89,6 @@ public class User {
 
     }
 
-    public EUserType getType() {
-        return type;
-    }
-
-    public void setType(EUserType type) {
-        this.type = type;
-    }
 
     public String getFirstName() {
         return firstName;
