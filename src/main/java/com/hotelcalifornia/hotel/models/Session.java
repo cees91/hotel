@@ -1,11 +1,11 @@
 package com.hotelcalifornia.hotel.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class Session {
@@ -15,6 +15,29 @@ public class Session {
 
     private String email;
 
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne
+    private User user;
+
+    @Column(name = "uuid")
+    @Type(type = "uuid-char")
+    private UUID uuid;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     @NotNull
     private LocalDateTime loginDate = LocalDateTime.now();
@@ -41,13 +64,7 @@ public class Session {
         this.email = email;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+
 
 
 }

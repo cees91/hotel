@@ -20,11 +20,10 @@ public class GuestService {
     public Guest getUser(String email, String password){
         return guestRepository.findByEmailAddress(email);
     }
-    public boolean checkCredentials(User user){
-        String password = user.getPassword();
+    public boolean checkCredentials(User user,String password){
         if(user != null){
             String passwordOfUser = user.getPassword();
-            if(password.equals(BCrypt.hashpw(passwordOfUser, BCrypt.gensalt()))){
+            if(BCrypt.checkpw(password, user.getPassword())){
                 return true;
             } else {
                 return false;

@@ -8,35 +8,47 @@ import com.hotelcalifornia.hotel.models.User;
 import com.hotelcalifornia.hotel.services.GuestService;
 import com.hotelcalifornia.hotel.services.SessionService;
 import com.hotelcalifornia.hotel.services.UserService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Scanner;
-@RestController
-@RequestMapping
+import java.util.UUID;
+
+        @RestController
+@RequestMapping("/api/login")
 public class Login {
     @Autowired
     private SessionService sessionService;
     @Autowired
     private GuestService service;
     @PostMapping
-    public Guest login(@RequestBody Guest guest) throws RuntimeException{
+    public UUID login(@RequestBody Guest guest) throws RuntimeException{
         String email = guest.getEmailAddress();
         String password = guest.getPassword();
         Guest user = service.getUser(email, password);
-        boolean hasCorrectCredentials = service.checkCredentials(user);
+        boolean hasCorrectCredentials = service.checkCredentials(user, password);
         if(hasCorrectCredentials){
-            Session session = new Session();
-            session.setEmail(user.getEmailAddress());
-            sessionService.add(session);
-            return user;
+            Session session = sessionService.findByEmail(email);
+
+            if(session == null) {
+                session = new Session();
+                session.setEmail(user.getEmailAddress());
+                sessionService.add(session,user);
+            }
+            System.out.println("succesfully logged in");
+            Hibernate.initialize(user.getBookingsOfUser());
+            return session.getUuid();
         } else{
             throw new NotAllowedException("Wrong password or username");
         }
     }
+    @GetMapping
+    public User getUser(@RequestParam UUID uuid){
+        return sessionService.getUser(uuid);
+    }
     @DeleteMapping
-    public void logout(long id) throws RuntimeException{
-        sessionService.deleteSession(id);
+    public void logout(@RequestParam UUID uuid) throws RuntimeException{
+        sessionService.deleteSession(uuid);
     }
 }
-
