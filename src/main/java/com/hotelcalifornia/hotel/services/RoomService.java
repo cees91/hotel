@@ -18,6 +18,15 @@ public class RoomService {
     @Autowired
     private RoomRepository repo;
 
+    public Room findRoom(long roomNumber) throws Exception {
+        Room room = filterRooms(roomNumber);
+        if (room != null) {
+            return room;
+        } else {
+            throw new Exception("Room not found!");
+        }
+    }
+
     private Room filterRooms(long roomNumber) {
         Room room = null;
         for (Room currentRoom : repo.findAll()) {
@@ -27,33 +36,6 @@ public class RoomService {
             }
         }
         return room;
-    }
-
-    public ArrayList<Room> getRooms() {
-        return repo.findAll();
-    }
-
-    public void addRooms(List<Room> rooms) {
-        repo.saveAll(rooms);
-    }
-
-    public void addRoom(Room room) {
-        repo.save(room);
-    }
-
-    public List<Room> getAvailableRooms() {
-        List<Room> availableRooms = repo.findAll().stream().filter(room -> room.isAvailable()).collect(Collectors.toList());
-        ;
-        return availableRooms;
-    }
-
-    public Room findRoom(long roomNumber) throws Exception {
-        Room room = filterRooms(roomNumber);
-        if (room != null) {
-            return room;
-        } else {
-            throw new Exception("Room not found!");
-        }
     }
 
     public List<Room> findRoom(String roomType) throws Exception {
@@ -85,6 +67,28 @@ public class RoomService {
         return foundRooms;
     }
 
+    public ArrayList<Room> getAllRooms() {
+        return repo.findAll();
+    }
+
+    public void addRooms(List<Room> rooms) {
+        repo.saveAll(rooms);
+    }
+
+    public void addRoom(Room room) {
+        repo.save(room);
+    }
+
+    public void deleteRoomById(long id) {
+        repo.deleteById(id);
+    }
+
+    public List<Room> getAvailableRooms() {
+        List<Room> availableRooms = repo.findAll().stream().filter(room -> room.isAvailable()).collect(Collectors.toList());
+        ;
+        return availableRooms;
+    }
+
     private boolean checkDates(Room currentRoom, int numberOfAdults, LocalDate startDate, LocalDate endDate) {
         if ((currentRoom.getStartDate() == null && currentRoom.getEndDate() == null
                 || (currentRoom.getStartDate().isAfter(startDate) && currentRoom.getStartDate().isAfter(endDate))
@@ -95,8 +99,8 @@ public class RoomService {
     }
 
     public void bookRoom(Room room) {
-
         repo.save(room);
     }
+
 
 }
